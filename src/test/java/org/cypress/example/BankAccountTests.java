@@ -81,14 +81,12 @@ public class BankAccountTests extends BaseTransactionTest{
                 .log()
                 .all()
                 .contentType("application/json")
-//                .body("<meta charset=\"utf-8\">"+jsonString)//
-                .body(jsonString)//
-
-                .when()
+                .body(jsonString)
+            .when()
                 .log()
                 .all()
                 .post()
-        .then()
+            .then()
                 .log()
                 .all()
                 .assertThat()
