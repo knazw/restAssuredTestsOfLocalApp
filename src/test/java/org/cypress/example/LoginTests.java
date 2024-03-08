@@ -27,13 +27,7 @@ public class LoginTests extends BaseTest{
 
     @Test
     public void loginTestShouldFailWith401WhenUserDoesNotExist() {
-        String requestBody = " {\n" +
-                "\"firstName\": \"Elon1\",\n" +
-                "\"lastName\": \"Musk1\",\n" +
-                "\"salary\": 3000,\n" +
-                "\"email\": \"elonmusk@abc.com\"\n" +
-                "}";
-        requestBody = "{\n" +
+        String requestBody = "{\n" +
                 "    \"type\": \"LOGIN\",\n" +
                 "    \"username\": \"username\",\n" +
                 "    \"password\": \"12345678\"\n" +
@@ -52,13 +46,7 @@ public class LoginTests extends BaseTest{
 
     @Test
     public void loginTestShouldFailWith400WhenPasswordIsEmpty() {
-        String requestBody = " {\n" +
-                "\"firstName\": \"Elon1\",\n" +
-                "\"lastName\": \"Musk1\",\n" +
-                "\"salary\": 3000,\n" +
-                "\"email\": \"elonmusk@abc.com\"\n" +
-                "}";
-        requestBody = "{\n" +
+        String requestBody = "{\n" +
                 "    \"type\": \"LOGIN\",\n" +
                 "    \"username\": \"username\",\n" +
                 "    \"password\": \"\"\n" +
