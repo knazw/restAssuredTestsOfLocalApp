@@ -44,9 +44,9 @@ public class NotificationTests extends BaseTransactionTest{
 
         Response createTransactionResponse = RestAssured.given(SpecBuilder.getRequestSpec())
                 .body(createTransaction)
-                .when()
+            .when()
                 .post(pathTransactions)
-                .then()
+            .then()
                 .statusCode(200)
                 .extract()
                 .response();
@@ -59,9 +59,9 @@ public class NotificationTests extends BaseTransactionTest{
         // WHEN
         Response likeTransactionResponse = RestAssured.given(SpecBuilder.getRequestSpec())
                 .body(likeTransaction)
-                .when()
+            .when()
                 .post(pathLikesTransaction+postTransactionId)
-                .then()
+            .then()
                 .statusCode(200)
                 .body(containsString("OK"))
                 .extract()
@@ -89,9 +89,9 @@ public class NotificationTests extends BaseTransactionTest{
          */
 
         Response getTransactionResponse = RestAssured.given(SpecBuilder.getRequestSpec())
-                .when()
+            .when()
                 .get(pathTransactions)
-                .then()
+            .then()
                 .statusCode(200)
                 .extract()
                 .response();
@@ -105,9 +105,9 @@ public class NotificationTests extends BaseTransactionTest{
         Assertions.assertEquals(loggedUserId, likeUserId);
 
         Response getNotificationResponse = RestAssured.given(SpecBuilder.getRequestSpec())
-                .when()
+            .when()
                 .get(pathNotifications)
-                .then()
+            .then()
                 .statusCode(200)
                 .extract()
                 .response();
@@ -124,18 +124,17 @@ public class NotificationTests extends BaseTransactionTest{
 
         Response patchNotificationResponse = RestAssured.given(SpecBuilder.getRequestSpec())
                 .body(updateNotification)
-                .when()
+            .when()
                 .patch(pathNotifications+notificationId)
-                .then()
+            .then()
                 .statusCode(204)
                 .extract()
                 .response();
 
-//        jsonPathEvaluator = patchNotificationResponse.jsonPath();
         getNotificationResponse = RestAssured.given(SpecBuilder.getRequestSpec())
-                .when()
+            .when()
                 .get(pathNotifications)
-                .then()
+            .then()
                 .statusCode(200)
                 .extract()
                 .response();
@@ -155,9 +154,9 @@ public class NotificationTests extends BaseTransactionTest{
 
         Response createTransactionResponse = RestAssured.given(SpecBuilder.getRequestSpec())
                 .body(createTransaction)
-                .when()
+            .when()
                 .post(pathTransactions)
-                .then()
+            .then()
                 .statusCode(200)
                 .extract()
                 .response();
@@ -170,9 +169,9 @@ public class NotificationTests extends BaseTransactionTest{
         // like first transaction
         Response likeTransactionResponse0 = RestAssured.given(SpecBuilder.getRequestSpec())
                 .body(likeTransaction)
-                .when()
+            .when()
                 .post(pathLikesTransaction+postTransactionId0)
-                .then()
+            .then()
                 .statusCode(200)
                 .body(containsString("OK"))
                 .extract()
@@ -186,9 +185,9 @@ public class NotificationTests extends BaseTransactionTest{
 
         createTransactionResponse = RestAssured.given(SpecBuilder.getRequestSpec())
                 .body(createTransaction)
-                .when()
+            .when()
                 .post(pathTransactions)
-                .then()
+            .then()
                 .statusCode(200)
                 .extract()
                 .response();
@@ -201,9 +200,9 @@ public class NotificationTests extends BaseTransactionTest{
         // like next transaction 2:
         Response likeTransactionResponse1 = RestAssured.given(SpecBuilder.getRequestSpec())
                 .body(likeTransaction)
-                .when()
+            .when()
                 .post(pathLikesTransaction+postTransactionId1)
-                .then()
+            .then()
                 .statusCode(200)
                 .body(containsString("OK"))
                 .extract()
@@ -215,9 +214,9 @@ public class NotificationTests extends BaseTransactionTest{
 
         Response createTransactionResponse2 = RestAssured.given(SpecBuilder.getRequestSpec())
                 .body(createTransaction)
-                .when()
+            .when()
                 .post(pathTransactions)
-                .then()
+            .then()
                 .statusCode(200)
                 .extract()
                 .response();
@@ -230,9 +229,9 @@ public class NotificationTests extends BaseTransactionTest{
 
         Response likeTransactionResponse2 = RestAssured.given(SpecBuilder.getRequestSpec())
                 .body(likeTransaction)
-                .when()
+            .when()
                 .post(pathLikesTransaction+postTransactionId2)
-                .then()
+            .then()
                 .statusCode(200)
                 .body(containsString("OK"))
                 .extract()
@@ -241,9 +240,9 @@ public class NotificationTests extends BaseTransactionTest{
         // getNotifications -> notificationId
 
         Response getNotificationResponse = RestAssured.given(SpecBuilder.getRequestSpec())
-                .when()
+            .when()
                 .get(pathNotifications)
-                .then()
+            .then()
                 .statusCode(200)
                 .extract()
                 .response();
@@ -254,14 +253,14 @@ public class NotificationTests extends BaseTransactionTest{
         String shouldStayNotificationId1 = jsonPathEvaluator.get("results[1].id");
 
 
-        // WHEN patch notofication with notificationId
+        // WHEN patch notification with notificationId
         UpdateNotification updateNotification = createPatchNotificationData(deletedNotificationId);
 
         Response patchNotificationResponse = RestAssured.given(SpecBuilder.getRequestSpec())
                 .body(updateNotification)
-                .when()
+            .when()
                 .patch(pathNotifications+deletedNotificationId)
-                .then()
+            .then()
                 .statusCode(204)
                 .extract()
                 .response();
@@ -270,9 +269,9 @@ public class NotificationTests extends BaseTransactionTest{
 
         // THEN only 2 notifications left
         getNotificationResponse = RestAssured.given(SpecBuilder.getRequestSpec())
-                .when()
+            .when()
                 .get(pathNotifications)
-                .then()
+            .then()
                 .statusCode(200)
                 .extract()
                 .response();
@@ -290,9 +289,9 @@ public class NotificationTests extends BaseTransactionTest{
 
         // getTransactions -> 3 likes
         Response getTransactionResponse = RestAssured.given(SpecBuilder.getRequestSpec())
-                .when()
+            .when()
                 .get(pathTransactions)
-                .then()
+            .then()
                 .statusCode(200)
                 .extract()
                 .response();
@@ -313,13 +312,10 @@ public class NotificationTests extends BaseTransactionTest{
         createTransactionData();
 
         Response createTransactionResponse = RestAssured.given(SpecBuilder.getRequestSpec())
-
-
                 .body(createTransaction)
-
-                .when()
+            .when()
                 .post(pathTransactions)
-                .then()
+            .then()
                 .statusCode(200)
                 .extract()
                 .response();
@@ -331,13 +327,10 @@ public class NotificationTests extends BaseTransactionTest{
 
         // WHEN
         Response likeTransactionResponse = RestAssured.given(SpecBuilder.getRequestSpec())
-                
-                
                 .body(likeTransaction)
-
-                .when()
+            .when()
                 .post(pathLikesTransaction+postTransactionId)
-                .then()
+            .then()
                 .statusCode(200)
                 .body(containsString("OK"))
                 .extract()
@@ -365,12 +358,9 @@ public class NotificationTests extends BaseTransactionTest{
          */
 
         Response getTransactionResponse = RestAssured.given(SpecBuilder.getRequestSpec())
-                
-                
-
-                .when()
+            .when()
                 .get(pathTransactions)
-                .then()
+            .then()
                 .statusCode(200)
                 .extract()
                 .response();
@@ -384,12 +374,9 @@ public class NotificationTests extends BaseTransactionTest{
         Assertions.assertEquals(loggedUserId, likeUserId);
 
         Response getNotificationResponse = RestAssured.given(SpecBuilder.getRequestSpec())
-                
-                
-
-                .when()
+            .when()
                 .get(pathNotifications)
-                .then()
+            .then()
                 .statusCode(200)
                 .extract()
                 .response();
@@ -405,25 +392,18 @@ public class NotificationTests extends BaseTransactionTest{
         UpdateNotification updateNotification = createPatchNotificationData(notificationId);
 
         Response patchNotificationResponse = RestAssured.given(SpecBuilder.getRequestSpec())
-                
-                
-
                 .body(updateNotification)
-                .when()
+            .when()
                 .patch(pathNotifications+notificationId)
-                .then()
+            .then()
                 .statusCode(204)
                 .extract()
                 .response();
 
-//        jsonPathEvaluator = patchNotificationResponse.jsonPath();
         getNotificationResponse = RestAssured.given(SpecBuilder.getRequestSpec())
-                
-                
-
-                .when()
+            .when()
                 .get(pathNotifications)
-                .then()
+            .then()
                 .statusCode(200)
                 .extract()
                 .response();
