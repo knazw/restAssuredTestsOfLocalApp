@@ -49,7 +49,7 @@ public class NotificationTests extends BaseTransactionTest{
                 .extract()
                 .response();
 
-        JsonPath jsonPathEvaluator = jsonPathEvaluator = createTransactionResponse.jsonPath();
+        JsonPath jsonPathEvaluator = createTransactionResponse.jsonPath();
         String postTransactionId = jsonPathEvaluator.get("transaction.id");
 
         createLikeTransactionData(postTransactionId);
@@ -94,7 +94,7 @@ public class NotificationTests extends BaseTransactionTest{
                 .extract()
                 .response();
 
-        jsonPathEvaluator = jsonPathEvaluator = getTransactionResponse.jsonPath();
+        jsonPathEvaluator = getTransactionResponse.jsonPath();
         String likeTransactionId = jsonPathEvaluator.get("results[0].likes[0].transactionId");
         String likeUserId = jsonPathEvaluator.get("results[0].likes[0].userId");
         String likeId = jsonPathEvaluator.get("results[0].likes[0].id");
@@ -159,7 +159,7 @@ public class NotificationTests extends BaseTransactionTest{
                 .extract()
                 .response();
 
-        JsonPath jsonPathEvaluator = jsonPathEvaluator = createTransactionResponse.jsonPath();
+        JsonPath jsonPathEvaluator = createTransactionResponse.jsonPath();
         String postTransactionId0 = jsonPathEvaluator.get("transaction.id");
 
         createLikeTransactionData(postTransactionId0);
@@ -190,7 +190,7 @@ public class NotificationTests extends BaseTransactionTest{
                 .extract()
                 .response();
 
-        jsonPathEvaluator = jsonPathEvaluator = createTransactionResponse.jsonPath();
+        jsonPathEvaluator = createTransactionResponse.jsonPath();
         String postTransactionId1 = jsonPathEvaluator.get("transaction.id");
 
         createLikeTransactionData(postTransactionId1);
@@ -318,7 +318,7 @@ public class NotificationTests extends BaseTransactionTest{
                 .extract()
                 .response();
 
-        JsonPath jsonPathEvaluator = jsonPathEvaluator = createTransactionResponse.jsonPath();
+        JsonPath jsonPathEvaluator = createTransactionResponse.jsonPath();
         String postTransactionId = jsonPathEvaluator.get("transaction.id");
 
         createLikeTransactionData(postTransactionId);
@@ -363,7 +363,7 @@ public class NotificationTests extends BaseTransactionTest{
                 .extract()
                 .response();
 
-        jsonPathEvaluator = jsonPathEvaluator = getTransactionResponse.jsonPath();
+        jsonPathEvaluator = getTransactionResponse.jsonPath();
         String likeTransactionId = jsonPathEvaluator.get("results[0].likes[0].transactionId");
         String likeUserId = jsonPathEvaluator.get("results[0].likes[0].userId");
         String likeId = jsonPathEvaluator.get("results[0].likes[0].id");
