@@ -48,24 +48,19 @@ public class BaseTest {
                 .baseUri(baseUri)
                 .body(user)
                 .contentType(ContentType.JSON)
-                .when()
+            .when()
                 .post("/users")
-                .then()
+            .then()
                 .statusCode(201);
-//                .body("id", Matchers.notNullValue())
-//                .body("firstName", Matchers.equalTo(employeeJsonAsMap.get("firstName")))
-//                .body("lastName", Matchers.equalTo(employeeJsonAsMap.get("lastName")))
-//                .body("salary", Matchers.equalTo(employeeJsonAsMap.get("salary")))
-//                .body("email", Matchers.equalTo(employeeJsonAsMap.get("email")));
 
         //cookieValue
         Response loginResponse = RestAssured.given()
                 .baseUri(baseUri)
                 .body(user)
                 .contentType(ContentType.JSON)
-                .when()
+            .when()
                 .post("/login")
-                .then()
+            .then()
                 .statusCode(200)
                 .extract().response();
         JsonPath jsonPathEvaluator = jsonPathEvaluator = loginResponse.jsonPath();
@@ -73,7 +68,7 @@ public class BaseTest {
         System.out.println("user.id received from loginResponse " + jsonPathEvaluator.get("user.id"));
         loggedUserId = jsonPathEvaluator.get("user.id");
         cookieValue = loginResponse.header("Set-Cookie");
-//                .body(containsString("OK"));
+
 
         String[] cookieHeaderArray = cookieValue.split(";");
         cookieValue = cookieHeaderArray[0];
@@ -82,9 +77,9 @@ public class BaseTest {
                 .baseUri(baseUri)
                 .body(user1)
                 .contentType(ContentType.JSON)
-                .when()
+            .when()
                 .post("/users")
-                .then()
+            .then()
                 .statusCode(201)
                 .extract().response();
 
@@ -99,9 +94,9 @@ public class BaseTest {
                 .baseUri(baseUri)
                 .body(user)
                 .contentType(ContentType.JSON)
-                .when()
+            .when()
                 .post("/users")
-                .then()
+            .then()
                 .statusCode(201)
                 .extract().response();
 
@@ -116,9 +111,9 @@ public class BaseTest {
         RestAssured.given()
                 .baseUri(baseUri)
                 .contentType(ContentType.JSON)
-                .when()
+            .when()
                 .post(pathDataSeed)
-                .then()
+            .then()
                 .statusCode(200)
                 .body(containsString("OK"));
     }
