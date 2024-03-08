@@ -15,7 +15,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
 
 public class BankAccountTests extends BaseTransactionTest{
 
