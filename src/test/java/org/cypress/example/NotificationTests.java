@@ -10,7 +10,8 @@ import org.cypress.example.models.LikeTransaction;
 import org.cypress.example.models.UpdateNotification;
 import org.junit.jupiter.api.*;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.Matchers.containsString;
 
@@ -138,7 +139,7 @@ public class NotificationTests extends BaseTransactionTest{
                 .response();
 
         jsonPathEvaluator = getNotificationResponse.jsonPath();
-        ArrayList results = jsonPathEvaluator.get("results");
+        List<Map<String, Object>> results = jsonPathEvaluator.get("results");
 
         Assertions.assertEquals(0, results.size());
     }
@@ -277,7 +278,7 @@ public class NotificationTests extends BaseTransactionTest{
         jsonPathEvaluator = getNotificationResponse.jsonPath();
         String presentNotificationId0 = jsonPathEvaluator.get("results[0].id");
         String presentNotificationId1 = jsonPathEvaluator.get("results[1].id");
-        ArrayList presentNotificationList = jsonPathEvaluator.get("results");
+        List<Map<String, Object>> presentNotificationList = jsonPathEvaluator.get("results");
 
 
         Assertions.assertEquals(shouldStayNotificationId0, presentNotificationId0);
@@ -407,7 +408,7 @@ public class NotificationTests extends BaseTransactionTest{
                 .response();
 
         jsonPathEvaluator = getNotificationResponse.jsonPath();
-        ArrayList results = jsonPathEvaluator.get("results");
+        List<Map<String, Object>> results = jsonPathEvaluator.get("results");
 
         Assertions.assertEquals(0, results.size());
     }
