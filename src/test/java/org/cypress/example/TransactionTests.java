@@ -45,25 +45,25 @@ public class TransactionTests extends BaseTransactionTest {
 
         Response createTransactionResponse = RestAssured.given(SpecBuilder.getRequestSpec())
                 .body(createTransaction)
-                .when()
+            .when()
                 .post(pathTransactions)
-                .then()
+            .then()
                 .statusCode(200)
                 .extract()
                 .response();
 
-        JsonPath jsonPathEvaluator = jsonPathEvaluator = createTransactionResponse.jsonPath();
+        JsonPath jsonPathEvaluator = createTransactionResponse.jsonPath();
         String postTransactionId = jsonPathEvaluator.get("transaction.id");
 
         Response getTransactionResponse = RestAssured.given(SpecBuilder.getRequestSpec())
-                .when()
+            .when()
                 .get(pathTransactions)
-                .then()
+            .then()
                 .statusCode(200)
                 .extract()
                 .response();
 
-        jsonPathEvaluator = jsonPathEvaluator = getTransactionResponse.jsonPath();
+        jsonPathEvaluator = getTransactionResponse.jsonPath();
         String getTransactionId = jsonPathEvaluator.get("results[0].id");
         int getTransactionAmount = jsonPathEvaluator.get("results[0].amount");
         String getTransactionReceiverName = jsonPathEvaluator.get("results[0].receiverName");
@@ -103,25 +103,25 @@ public class TransactionTests extends BaseTransactionTest {
 
         Response createTransactionResponse = RestAssured.given(SpecBuilder.getRequestSpec())
                 .body(createTransaction)
-                .when()
+            .when()
                 .post(pathTransactions)
-                .then()
+            .then()
                 .statusCode(200)
                 .extract()
                 .response();
 
-        JsonPath jsonPathEvaluator = jsonPathEvaluator = createTransactionResponse.jsonPath();
+        JsonPath jsonPathEvaluator = createTransactionResponse.jsonPath();
         String postTransactionId = jsonPathEvaluator.get("transaction.id");
 
         Response getTransactionResponse = RestAssured.given(SpecBuilder.getRequestSpec())
-                .when()
+            .when()
                 .get(pathTransactions)
-                .then()
+            .then()
                 .statusCode(200)
                 .extract()
                 .response();
 
-        jsonPathEvaluator = jsonPathEvaluator = getTransactionResponse.jsonPath();
+        jsonPathEvaluator = getTransactionResponse.jsonPath();
         String getTransactionId = jsonPathEvaluator.get("results[0].id");
         int getTransactionAmount = jsonPathEvaluator.get("results[0].amount");
         String getTransactionReceiverName = jsonPathEvaluator.get("results[0].receiverName");
@@ -161,23 +161,23 @@ public class TransactionTests extends BaseTransactionTest {
         Response postLikeTransactionResponse = RestAssured
                 .given(SpecBuilder.getRequestSpec())
                 .body(likeTransaction)
-                .when()
+            .when()
                 .post(pathLikesTransaction+likeTransaction.transactionId)
-                .then()
+            .then()
                 .statusCode(200)
                 .body(containsString("OK"))
                 .extract()
                 .response();
 
         Response getTransactionAfterLikeResponse = RestAssured.given(SpecBuilder.getRequestSpec())
-                .when()
+            .when()
                 .get(pathTransactions)
-                .then()
+            .then()
                 .statusCode(200)
                 .extract()
                 .response();
 
-        jsonPathEvaluator = jsonPathEvaluator = getTransactionAfterLikeResponse.jsonPath();
+        jsonPathEvaluator = getTransactionAfterLikeResponse.jsonPath();
         String likeTransactionUserId = jsonPathEvaluator.get("results[0].likes[0].userId");
         String likeTransactionTransactionId = jsonPathEvaluator.get("results[0].likes[0].transactionId");
 
@@ -191,25 +191,25 @@ public class TransactionTests extends BaseTransactionTest {
 
         Response createTransactionResponse = RestAssured.given(SpecBuilder.getRequestSpec())
                 .body(createTransaction)
-                .when()
+            .when()
                 .post(pathTransactions)
-                .then()
+            .then()
                 .statusCode(200)
                 .extract()
                 .response();
 
-        JsonPath jsonPathEvaluator = jsonPathEvaluator = createTransactionResponse.jsonPath();
+        JsonPath jsonPathEvaluator = createTransactionResponse.jsonPath();
         String postTransactionId = jsonPathEvaluator.get("transaction.id");
 
         Response getTransactionResponse = RestAssured.given(SpecBuilder.getRequestSpec())
-                .when()
+            .when()
                 .get(pathTransactions)
-                .then()
+            .then()
                 .statusCode(200)
                 .extract()
                 .response();
 
-        jsonPathEvaluator = jsonPathEvaluator = getTransactionResponse.jsonPath();
+        jsonPathEvaluator = getTransactionResponse.jsonPath();
         String getTransactionId = jsonPathEvaluator.get("results[0].id");
         int getTransactionAmount = jsonPathEvaluator.get("results[0].amount");
         String getTransactionReceiverName = jsonPathEvaluator.get("results[0].receiverName");
@@ -251,9 +251,9 @@ public class TransactionTests extends BaseTransactionTest {
         Response postCommentTransactionResponse = RestAssured
                 .given(SpecBuilder.getRequestSpec())
                 .body(addTransactionComment)
-                .when()
+            .when()
                 .post(pathComments+getTransactionId)
-                .then()
+            .then()
                 .statusCode(200)
                 .body(containsString("OK"))
                 .extract()
@@ -261,14 +261,14 @@ public class TransactionTests extends BaseTransactionTest {
 
 
         Response getTransactionAfterCommentResponse = RestAssured.given(SpecBuilder.getRequestSpec())
-                .when()
+            .when()
                 .get(pathTransactions)
-                .then()
+            .then()
                 .statusCode(200)
                 .extract()
                 .response();
 
-        jsonPathEvaluator = jsonPathEvaluator = getTransactionAfterCommentResponse.jsonPath();
+        jsonPathEvaluator = getTransactionAfterCommentResponse.jsonPath();
         String commentTransactionUserId = jsonPathEvaluator.get("results[0].comments[0].userId");
         String commentTransactionTransactionId = jsonPathEvaluator.get("results[0].comments[0].transactionId");
 
