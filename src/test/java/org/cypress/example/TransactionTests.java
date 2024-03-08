@@ -1,6 +1,5 @@
 package org.cypress.example;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.ErrorLoggingFilter;
 import io.restassured.filter.log.RequestLoggingFilter;
@@ -8,12 +7,11 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.cypress.example.models.AddTransactionComment;
-import org.cypress.example.models.CreateTransaction;
 import org.cypress.example.models.LikeTransaction;
-import org.cypress.example.models.User;
 import org.junit.jupiter.api.*;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.Matchers.containsString;
 
@@ -76,8 +74,8 @@ public class TransactionTests extends BaseTransactionTest {
         boolean getTransactionHasNextPages = jsonPathEvaluator.get("pageData.hasNextPages");
         int getTransactionTotalPages = jsonPathEvaluator.get("pageData.totalPages");
 
-        ArrayList getTransactionLikes = jsonPathEvaluator.get("results[0].likes");
-        ArrayList getTransactionComments = jsonPathEvaluator.get("results[0].comments");
+        List<Map<String, Object>> getTransactionLikes = jsonPathEvaluator.get("results[0].likes");
+        List<Map<String, Object>> getTransactionComments = jsonPathEvaluator.get("results[0].comments");
 
         Assertions.assertEquals(postTransactionId, getTransactionId);
         Assertions.assertEquals(Integer.parseInt(createTransaction.amount) * 100, getTransactionAmount);
@@ -134,8 +132,8 @@ public class TransactionTests extends BaseTransactionTest {
         boolean getTransactionHasNextPages = jsonPathEvaluator.get("pageData.hasNextPages");
         int getTransactionTotalPages = jsonPathEvaluator.get("pageData.totalPages");
 
-        ArrayList getTransactionLikes = jsonPathEvaluator.get("results[0].likes");
-        ArrayList getTransactionComments = jsonPathEvaluator.get("results[0].comments");
+        List<Map<String, Object>> getTransactionLikes = jsonPathEvaluator.get("results[0].likes");
+        List<Map<String, Object>> getTransactionComments = jsonPathEvaluator.get("results[0].comments");
 
         Assertions.assertEquals(postTransactionId, getTransactionId);
         Assertions.assertEquals(Integer.parseInt(createTransaction.amount) * 100, getTransactionAmount);
@@ -222,8 +220,8 @@ public class TransactionTests extends BaseTransactionTest {
         boolean getTransactionHasNextPages = jsonPathEvaluator.get("pageData.hasNextPages");
         int getTransactionTotalPages = jsonPathEvaluator.get("pageData.totalPages");
 
-        ArrayList getTransactionLikes = jsonPathEvaluator.get("results[0].likes");
-        ArrayList getTransactionComments = jsonPathEvaluator.get("results[0].comments");
+        List<Map<String, Object>> getTransactionLikes = jsonPathEvaluator.get("results[0].likes");
+        List<Map<String, Object>> getTransactionComments = jsonPathEvaluator.get("results[0].comments");
 
         Assertions.assertEquals(postTransactionId, getTransactionId);
         Assertions.assertEquals(Integer.parseInt(createTransaction.amount) * 100, getTransactionAmount);
@@ -236,7 +234,7 @@ public class TransactionTests extends BaseTransactionTest {
         Assertions.assertEquals("complete", getTransactionStatus);
 
         Assertions.assertEquals(1, getTransactionPage);
-        Assertions.assertEquals(false, getTransactionHasNextPages);
+        Assertions.assertFalse(getTransactionHasNextPages);
         Assertions.assertEquals(1, getTransactionTotalPages);
 
         Assertions.assertEquals(0, getTransactionLikes.size());
