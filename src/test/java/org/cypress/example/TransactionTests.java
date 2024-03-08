@@ -88,7 +88,7 @@ public class TransactionTests extends BaseTransactionTest {
         Assertions.assertEquals("complete", getTransactionStatus);
 
         Assertions.assertEquals(1, getTransactionPage);
-        Assertions.assertEquals(false, getTransactionHasNextPages);
+        Assertions.assertFalse(getTransactionHasNextPages);
         Assertions.assertEquals(1, getTransactionTotalPages);
 
         Assertions.assertEquals(0, getTransactionLikes.size());
@@ -146,7 +146,7 @@ public class TransactionTests extends BaseTransactionTest {
         Assertions.assertEquals("complete", getTransactionStatus);
 
         Assertions.assertEquals(1, getTransactionPage);
-        Assertions.assertEquals(false, getTransactionHasNextPages);
+        Assertions.assertFalse(getTransactionHasNextPages);
         Assertions.assertEquals(1, getTransactionTotalPages);
 
         Assertions.assertEquals(0, getTransactionLikes.size());
