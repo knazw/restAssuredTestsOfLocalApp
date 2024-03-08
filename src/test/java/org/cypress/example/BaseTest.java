@@ -63,7 +63,7 @@ public class BaseTest {
             .then()
                 .statusCode(200)
                 .extract().response();
-        JsonPath jsonPathEvaluator = jsonPathEvaluator = loginResponse.jsonPath();
+        JsonPath jsonPathEvaluator = loginResponse.jsonPath();
 
         System.out.println("user.id received from loginResponse " + jsonPathEvaluator.get("user.id"));
         loggedUserId = jsonPathEvaluator.get("user.id");
