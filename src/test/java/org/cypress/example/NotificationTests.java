@@ -4,8 +4,6 @@ import io.restassured.RestAssured;
 import io.restassured.filter.log.ErrorLoggingFilter;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
-import io.restassured.http.ContentType;
-import io.restassured.internal.proxy.RestAssuredProxySelector;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.cypress.example.models.LikeTransaction;
