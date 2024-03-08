@@ -100,6 +100,6 @@ public class BankAccountTests extends BaseTransactionTest{
                 .body("{\"query\":\"{\\n Country(id: \\\"us\\\") {\\n name\\n situation\\n }\\n}\\n \"}")
                 .post(new URL("https://portal.ehri-project.eu/api/graphql"))
                 .jsonPath().getString("data.Country.name");
-        Assertions.assertEquals(actual, "United Sttates");
+        Assertions.assertEquals(actual, "United States");
     }
 }
