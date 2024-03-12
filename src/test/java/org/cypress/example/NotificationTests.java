@@ -265,7 +265,6 @@ public class NotificationTests extends BaseTransactionTest{
                 .response();
 
 
-
         // THEN only 2 notifications left
         getNotificationResponse = RestAssured.given(SpecBuilder.getRequestSpec())
             .when()

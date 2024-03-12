@@ -115,6 +115,7 @@ public class LoginTests extends BaseTest{
 
     @Test
     public void shouldLoginWhenUserExists() {
+        // GIVEN
         User user = new User();
         user.setFirstName("Adam");
         user.setLastName("Nowak");
@@ -122,6 +123,7 @@ public class LoginTests extends BaseTest{
         user.setPassword("12345678");
         user.setConfirmPassword("12345678");
 
+        // WHEN
         RestAssured.given(SpecBuilder.getRequestSpec())
                 .body(user)
             .when()
@@ -131,6 +133,7 @@ public class LoginTests extends BaseTest{
                 .assertThat()
                 .body(matchesJsonSchemaInClasspath("createdUser.json"));
 
+        // THEN
         RestAssured.given(SpecBuilder.getRequestSpec())
                 .body(user)
             .when()
@@ -138,7 +141,7 @@ public class LoginTests extends BaseTest{
             .then()
                 .statusCode(200)
                 .assertThat()
-                .body(matchesJsonSchemaInClasspath("logedUser.json"));
+                .body(matchesJsonSchemaInClasspath("loggedUser.json"));
 
     }
 

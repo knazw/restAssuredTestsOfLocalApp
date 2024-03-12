@@ -39,8 +39,10 @@ public class TransactionTests extends BaseTransactionTest {
 
     @Test
     public void createTransactionTest() {
+        // GIVEN
         createTransactionData();
 
+        // WHEN
         Response createTransactionResponse = RestAssured.given(SpecBuilder.getRequestSpec())
                 .body(createTransaction)
             .when()
@@ -53,6 +55,7 @@ public class TransactionTests extends BaseTransactionTest {
         JsonPath jsonPathEvaluator = createTransactionResponse.jsonPath();
         String postTransactionId = jsonPathEvaluator.get("transaction.id");
 
+        // THEN
         Response getTransactionResponse = RestAssured.given(SpecBuilder.getRequestSpec())
             .when()
                 .get(pathTransactions)
@@ -97,6 +100,7 @@ public class TransactionTests extends BaseTransactionTest {
 
     @Test
     public void createAndLikeTransaction() {
+        // GIVEN
         createTransactionData();
 
         Response createTransactionResponse = RestAssured.given(SpecBuilder.getRequestSpec())
@@ -152,6 +156,7 @@ public class TransactionTests extends BaseTransactionTest {
         Assertions.assertEquals(0, getTransactionLikes.size());
         Assertions.assertEquals(0, getTransactionComments.size());
 
+        // WHEN
         LikeTransaction likeTransaction = new LikeTransaction();
         likeTransaction.transactionId = getTransactionId;
 
@@ -167,6 +172,7 @@ public class TransactionTests extends BaseTransactionTest {
                 .extract()
                 .response();
 
+        // THEN
         Response getTransactionAfterLikeResponse = RestAssured.given(SpecBuilder.getRequestSpec())
             .when()
                 .get(pathTransactions)
@@ -185,6 +191,7 @@ public class TransactionTests extends BaseTransactionTest {
 
     @Test
     public void createAndCommentTransaction() {
+        // GIVEN
         createTransactionData();
 
         Response createTransactionResponse = RestAssured.given(SpecBuilder.getRequestSpec())
@@ -246,6 +253,7 @@ public class TransactionTests extends BaseTransactionTest {
         addTransactionComment.transactionId = getTransactionId;
         addTransactionComment.content = "Comment for "+getTransactionId;
 
+        // WHEN
         Response postCommentTransactionResponse = RestAssured
                 .given(SpecBuilder.getRequestSpec())
                 .body(addTransactionComment)
@@ -258,6 +266,7 @@ public class TransactionTests extends BaseTransactionTest {
                 .response();
 
 
+        // THEN
         Response getTransactionAfterCommentResponse = RestAssured.given(SpecBuilder.getRequestSpec())
             .when()
                 .get(pathTransactions)
