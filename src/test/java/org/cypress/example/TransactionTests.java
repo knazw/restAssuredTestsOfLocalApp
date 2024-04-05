@@ -1,5 +1,6 @@
 package org.cypress.example;
 
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.ErrorLoggingFilter;
 import io.restassured.filter.log.RequestLoggingFilter;
@@ -19,7 +20,7 @@ public class TransactionTests extends BaseTransactionTest {
 
     @BeforeAll
     public static void beforeClass() {
-        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter(), new ErrorLoggingFilter());
+        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter(), new ErrorLoggingFilter(), new AllureRestAssured());
 
         createUsers();
     }
