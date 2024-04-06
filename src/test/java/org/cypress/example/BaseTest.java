@@ -7,7 +7,7 @@ import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.cypress.example.models.User;
+import org.cypress.example.model.User;
 
 import static org.hamcrest.Matchers.containsString;
 
@@ -18,6 +18,8 @@ public class BaseTest {
     protected static String pathLikesTransaction = "/likes/";
     protected static String pathNotifications = "/notifications/";
     protected static String pathComments = "/comments/";
+    protected static String pathUsers = "/users";
+    protected static String pathLogin = "/login";
     public static String cookieValue = "";
     protected static String userId0;
     protected static String userId1;
@@ -116,7 +118,7 @@ public class BaseTest {
                 .body(containsString("OK"));
     }
 
-    static class SpecBuilder {
+    protected static class SpecBuilder {
         public static RequestSpecification getRequestSpec(){
             return new RequestSpecBuilder().setBaseUri(baseUri)
                     .addHeader("Cookie",cookieValue)
