@@ -1,0 +1,23 @@
+[
+  {
+    "firstName": "Adam",
+    "lastName": "Nowak",
+    "username": "username",
+    "password": "12345678",
+    "confirmPassword": "12345678"
+  },
+  {
+    "firstName": "Jan",
+    "lastName": "Kowalski",
+    "username": "username1",
+    "password": "12345678",
+    "confirmPassword": "12345678"
+  },
+  {
+    "firstName": "Michal",
+    "lastName": "Nazwisko",
+    "username": "notexistingUser",
+    "password": "12345678",
+    "confirmPassword": "12345678"
+  }
+]
