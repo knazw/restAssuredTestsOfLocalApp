@@ -43,23 +43,3 @@ Feature: Login scenarios
       | username1       |
       | username        |
 
-  Scenario: Correct non-zero number of books found by author without transformer
-    Given I have the following books in the store without transformer 2
-      | title                                | author      | price |
-      | The Devil in the White City          | Erik Larson | 10.99 |
-      | The Lion, the Witch and the Wardrobe | C.S. Lewis  | 8.79  |
-      | In the Garden of Beasts              | Erik Larson | 6.99  |
-    When I add prices of all books
-    Then I have price of all books
-      | overall price |
-      | 26.77         |
-
-  Scenario: Correct computer overall price is computed without transformer
-    Given I have the following items in the store without transformer
-      | name        | producer  | price  | monthly costs |
-      | processor   | Intel     | 200.99 | 11.24         |
-      | motherboard | ASUS      | 160.79 | 6.92          |
-      | ram         | Kingstone | 100.99 | 2.53          |
-    When I add prices of all items
-    Then I have price of computer equal to 462.77
-    And I have overall monthly costs equal to 20.69

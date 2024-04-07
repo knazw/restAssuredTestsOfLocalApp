@@ -143,7 +143,6 @@ public class FirstBddClass extends BaseTest{
 
     @And("{string} is created")
     public void UserIsCreated(String username) {
-//        createUserResponse
          Response response       = RestAssured
                 .given(BaseTest.SpecBuilder.getRequestSpec())
                     .baseUri(baseUri)
@@ -164,7 +163,7 @@ public class FirstBddClass extends BaseTest{
         Assertions.assertEquals(user.getFirstName(), userCreated.getFirstName());
         Assertions.assertEquals(user.getLastName(), userCreated.getLastName());
         Assertions.assertEquals(user.getUsername(), userCreated.getUsername());
-        Assertions.assertTrue(userCreated.getPassword() != null); // ?
+        Assertions.assertTrue(userCreated.getPassword() != null);
         Assertions.assertTrue(UUID.fromString(userCreated.getUuid()) != null);
 
     }

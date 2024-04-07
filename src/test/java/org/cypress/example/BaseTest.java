@@ -8,10 +8,15 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.cypress.example.model.User;
+import org.slf4j.Logger;
 
+import static java.lang.invoke.MethodHandles.lookup;
 import static org.hamcrest.Matchers.containsString;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class BaseTest {
+
+    static final Logger log = getLogger(lookup().lookupClass());
     public static String baseUri = "http://localhost:3001";
     protected static String pathDataSeed = "/testData/seed";
     protected static String pathTransactions = "/transactions";
@@ -65,7 +70,7 @@ public class BaseTest {
                 .extract().response();
         JsonPath jsonPathEvaluator = loginResponse.jsonPath();
 
-        System.out.println("user.id received from loginResponse " + jsonPathEvaluator.get("user.id"));
+        log.debug("user.id received from loginResponse " + jsonPathEvaluator.get("user.id"));
         loggedUserId = jsonPathEvaluator.get("user.id");
         cookieValue = loginResponse.header("Set-Cookie");
 
@@ -86,8 +91,8 @@ public class BaseTest {
         jsonPathEvaluator = response.jsonPath();
 
 
-        System.out.println("user.id received from Response " + jsonPathEvaluator.get("user.id"));
-        System.out.println("user.username received from Response " + jsonPathEvaluator.get("user.username"));
+        log.debug("user.id received from Response " + jsonPathEvaluator.get("user.id"));
+        log.debug("user.username received from Response " + jsonPathEvaluator.get("user.username"));
         userId1 = jsonPathEvaluator.get("user.id");
 
         response = RestAssured.given()
@@ -102,8 +107,8 @@ public class BaseTest {
 
         jsonPathEvaluator = response.jsonPath();
 
-        System.out.println("user.id received from Response " + jsonPathEvaluator.get("user.id"));
-        System.out.println("user.username received from Response " + jsonPathEvaluator.get("user.username"));
+        log.debug("user.id received from Response " + jsonPathEvaluator.get("user.id"));
+        log.debug("user.username received from Response " + jsonPathEvaluator.get("user.username"));
         userId0 = jsonPathEvaluator.get("user.id");
     }
 
