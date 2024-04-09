@@ -5,14 +5,14 @@ import java.util.UUID;
 
 public class UserCreated {
     public String id;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    public String uuid;
+    public String firstName;
+    public String lastName;
+    public String username;
+    public String password;
+    public int balance;
+    public String createdAt;
+    public String modifiedAt;
 
     @Override
     public String toString() {
@@ -27,6 +27,14 @@ public class UserCreated {
                 ", createdAt='" + createdAt + '\'' +
                 ", modifiedAt='" + modifiedAt + '\'' +
                 '}';
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUuid() {
@@ -92,16 +100,6 @@ public class UserCreated {
     public void setModifiedAt(String modifiedAt) {
         this.modifiedAt = modifiedAt;
     }
-
-    public String uuid;
-    public String firstName;
-    public String lastName;
-    public String username;
-    public String password;
-    public int balance;
-    public String createdAt;
-    public String modifiedAt;
-
 
         /*"id": "_9n5n0SPC",
                 "uuid": "f4684290-cba6-4654-8efc-f9a7df09ea7b",
