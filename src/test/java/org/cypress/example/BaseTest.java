@@ -1,5 +1,7 @@
 package org.cypress.example;
 
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -31,6 +33,19 @@ public class BaseTest {
     protected static String loggedUserId;
     protected static User user;
     protected static User user1;
+
+    @After
+    public void afterEach() {
+        log.debug("================after================");
+        clearData();
+    }
+
+    @Before
+    public void beforeEach() {
+        log.debug("================before================");
+        clearData();
+    }
+
 
     protected static void createUsers() {
         user = new User();
@@ -127,6 +142,12 @@ public class BaseTest {
         public static RequestSpecification getRequestSpec(){
             return new RequestSpecBuilder().setBaseUri(baseUri)
                     .addHeader("Cookie",cookieValue)
+                    .setContentType(ContentType.JSON).log(LogDetail.ALL).build();
+        }
+
+        public static RequestSpecification getRequestSpec(String cookieValueArg){
+            return new RequestSpecBuilder().setBaseUri(baseUri)
+                    .addHeader("Cookie",cookieValueArg)
                     .setContentType(ContentType.JSON).log(LogDetail.ALL).build();
         }
     }

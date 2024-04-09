@@ -14,6 +14,7 @@ import io.restassured.filter.log.ErrorLoggingFilter;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import org.cypress.example.BaseTest;
@@ -42,9 +43,12 @@ public class FirstBddClass extends BaseTest{
     static final Logger log = getLogger(lookup().lookupClass());
 
     private static List<User> users;
-    private User user;
-    ValidatableResponse loginResponse;
-    ValidatableResponse createUserResponse;
+
+    private StepsData stepsData;
+
+    public FirstBddClass(StepsData stepsData) {
+        this.stepsData = stepsData;
+    }
 
     @After
     public void afterEach() {
@@ -76,29 +80,44 @@ public class FirstBddClass extends BaseTest{
 
 
 
-    @Given("I have the following user {string}")
+
+    @Given("Following user {string}")
     public void IHaveTheFollowingCredentials(String username) {
         JsonDataReader jsonDataReader = new JsonDataReader();
-        user = jsonDataReader.getUserByUsername(username);
+        stepsData.user = jsonDataReader.getUserByUsername(username);
     }
 
-    @When("When I start to login with credentials")
-    public void WhenIStartToLoginWithCredentials() {
-        loginResponse = RestAssured
+    @When("{string} start to login with credentials")
+    public void WhenIStartToLoginWithCredentials(String username) {
+        stepsData.validatableResponse = RestAssured
                 .given(BaseTest.SpecBuilder.getRequestSpec())
                     .baseUri(baseUri)
-                    .body(user)
+                    .body(stepsData.user)
                     .contentType(ContentType.JSON)
                 .when()
                     .post(pathLogin)
                 .then();
+
+        Response loginResponse = stepsData.validatableResponse
+                .extract().response();
+        JsonPath jsonPathEvaluator = loginResponse.jsonPath();
+
+        log.debug("user.id received from loginResponse " + jsonPathEvaluator.get("user.id"));
+//        loggedUserId = jsonPathEvaluator.get("user.id");
+        String cookieValue = loginResponse.header("Set-Cookie");
+
+
+        String[] cookieHeaderArray = cookieValue.split(";");
+        cookieValue = cookieHeaderArray[0];
+
+        stepsData.cookieValue = cookieValue;
     }
 
-    @When("I start to login with credentials from file {string}")
-    public void WhenIStartToLoginWithCredentialsFromFile(String fileName) {
+    @When("{string} starts to login with credentials from file {string}")
+    public void WhenIStartToLoginWithCredentialsFromFile(String username, String fileName) {
         String jsonInvalidUser = JsonDataReader.getInvalidUser(fileName);
 
-        loginResponse = RestAssured
+        stepsData.validatableResponse = RestAssured
                 .given(BaseTest.SpecBuilder.getRequestSpec())
                     .baseUri(baseUri)
                     .body(jsonInvalidUser)
@@ -108,9 +127,9 @@ public class FirstBddClass extends BaseTest{
                 .then();
     }
 
-    @When("I start to login with no credentials")
-    public void IStartToLoginWithNoCredentials() {
-        loginResponse = RestAssured
+    @When("{string} starts to login with no credentials")
+    public void IStartToLoginWithNoCredentials(String username) {
+        stepsData.validatableResponse = RestAssured
                 .given(BaseTest.SpecBuilder.getRequestSpec())
                     .baseUri(baseUri)
                     .contentType(ContentType.JSON)
@@ -119,34 +138,22 @@ public class FirstBddClass extends BaseTest{
                 .then();
     }
 
-
-    @Then("I receive {int} response code")
+    @Then("{int} response code is received")
     public void IReceiveResponseCode(int statusCode) {
-        loginResponse.statusCode(statusCode);
+        stepsData.validatableResponse.statusCode(statusCode);
     }
 
     @And("Response message {string}")
     public void ResponseMessage(String string) {
-        loginResponse.body(containsString(string));
+        stepsData.validatableResponse.body(containsString(string));
     }
-
-    /*
-    @Then("I receive 401 response code")
-    public void IReceive401ResponseCode() {
-        Response response = loginResponse.statusCode(401)
-                .extract()
-                .response();
-        log.debug("response body:"+response.body().prettyPrint());
-
-    }
-    */
 
     @And("{string} is created")
     public void UserIsCreated(String username) {
          Response response       = RestAssured
                 .given(BaseTest.SpecBuilder.getRequestSpec())
                     .baseUri(baseUri)
-                    .body(user)
+                    .body(stepsData.user)
                     .contentType(ContentType.JSON)
                 .when()
                     .post(pathUsers)
@@ -160,40 +167,19 @@ public class FirstBddClass extends BaseTest{
         UserCreated userCreated = objectMapper.convertValue(response.jsonPath().get("user"),UserCreated.class);
         log.debug("userCreated: "+userCreated.toString());
 
-        Assertions.assertEquals(user.getFirstName(), userCreated.getFirstName());
-        Assertions.assertEquals(user.getLastName(), userCreated.getLastName());
-        Assertions.assertEquals(user.getUsername(), userCreated.getUsername());
+        Assertions.assertEquals(stepsData.user.getFirstName(), userCreated.getFirstName());
+        Assertions.assertEquals(stepsData.user.getLastName(), userCreated.getLastName());
+        Assertions.assertEquals(stepsData.user.getUsername(), userCreated.getUsername());
         Assertions.assertTrue(userCreated.getPassword() != null);
         Assertions.assertTrue(UUID.fromString(userCreated.getUuid()) != null);
 
-    }
-
-    /*
-    @Then("I receive 200 response code")
-    public void IReceive200ResponseCode() {
-        Response response = loginResponse.statusCode(200)
-                .assertThat()
-                .body(matchesJsonSchemaInClasspath("loggedUser.json"))
-                .extract()
-                .response();
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        UserCreated userCreated = objectMapper.convertValue(response.jsonPath().get("user"),UserCreated.class); // ?
-        log.debug("userCreated: "+userCreated.toString());
-
-        Assertions.assertEquals(user.getFirstName(), userCreated.getFirstName());
-        Assertions.assertEquals(user.getLastName(), userCreated.getLastName());
-        Assertions.assertEquals(user.getUsername(), userCreated.getUsername());
-        Assertions.assertTrue(userCreated.getPassword() != null); //
-        Assertions.assertTrue(UUID.fromString(userCreated.getUuid()) != null);
+        stepsData.UsersIdMap.put(username, userCreated);
 
     }
-
-     */
 
     @And("Correct user object")
     public void CorrectUserObject() {
-        Response response = loginResponse.assertThat()
+        Response response = stepsData.validatableResponse.assertThat()
                 .body(matchesJsonSchemaInClasspath("loggedUser.json"))
                 .extract()
                 .response();
@@ -202,9 +188,9 @@ public class FirstBddClass extends BaseTest{
         UserCreated userCreated = objectMapper.convertValue(response.jsonPath().get("user"),UserCreated.class); // ?
         log.debug("userCreated: "+userCreated.toString());
 
-        Assertions.assertEquals(user.getFirstName(), userCreated.getFirstName());
-        Assertions.assertEquals(user.getLastName(), userCreated.getLastName());
-        Assertions.assertEquals(user.getUsername(), userCreated.getUsername());
+        Assertions.assertEquals(stepsData.user.getFirstName(), userCreated.getFirstName());
+        Assertions.assertEquals(stepsData.user.getLastName(), userCreated.getLastName());
+        Assertions.assertEquals(stepsData.user.getUsername(), userCreated.getUsername());
         Assertions.assertTrue(userCreated.getPassword() != null); //
         Assertions.assertTrue(UUID.fromString(userCreated.getUuid()) != null);
     }

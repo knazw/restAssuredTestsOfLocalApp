@@ -43,6 +43,9 @@ dependencies {
     testImplementation("org.junit.platform:junit-platform-suite:1.10.2")
     testImplementation("org.apache.commons:commons-collections4:4.4")
 
+    testImplementation("io.cucumber:cucumber-picocontainer:7.16.1")
+
+
     testImplementation("org.slf4j:slf4j-api:2.0.9")
     testImplementation("ch.qos.logback:logback-classic:1.5.3")
 
