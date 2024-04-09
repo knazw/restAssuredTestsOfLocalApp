@@ -2,8 +2,9 @@ Feature: Login scenarios
 
   Scenario Outline: User without account is not able to login
     Given Following user "<username>"
-    When "<username>" start to login with credentials
+    When "<username>" starts to login with credentials
     Then 401 response code is received
+    And Response message contains Unathorized
     Examples:
     | username        |
     | notexistingUser |
@@ -34,9 +35,10 @@ Feature: Login scenarios
   Scenario Outline: User with account is able to login
     Given Following user "<username>"
     And "<username>" is created
-    When "<username>" start to login with credentials
+    When "<username>" starts to login with credentials
     Then 200 response code is received
-    And Correct user object
+    And Correct user object is received
+    And Cookie can be obtained from response header
     Examples:
       | username        |
       | notexistingUser |
