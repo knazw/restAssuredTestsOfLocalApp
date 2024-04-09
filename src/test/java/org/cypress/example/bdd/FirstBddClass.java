@@ -87,7 +87,7 @@ public class FirstBddClass extends BaseTest{
         stepsData.user = jsonDataReader.getUserByUsername(username);
     }
 
-    @When("{string} start to login with credentials")
+    @When("{string} starts to login with credentials")
     public void WhenIStartToLoginWithCredentials(String username) {
         stepsData.validatableResponse = RestAssured
                 .given(BaseTest.SpecBuilder.getRequestSpec())
