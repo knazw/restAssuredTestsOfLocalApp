@@ -14,23 +14,29 @@ import org.cypress.example.models.LikeTransaction;
 import org.cypress.example.models.UpdateNotification;
 import org.dataProviders.JsonDataReader;
 import org.junit.jupiter.api.Assertions;
+import org.slf4j.Logger;
 
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.invoke.MethodHandles.lookup;
 import static org.hamcrest.Matchers.containsString;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class NotificationBddClass extends BaseTransactionTest {
 
+    static final Logger log = getLogger(lookup().lookupClass());
     private StepsData stepsData;
 
     @After
     public void afterEach() {
+        log.debug("================after================");
         clearData();
     }
 
     @Before
     public void beforeEach() {
+        log.debug("================before================");
         clearData();
     }
 

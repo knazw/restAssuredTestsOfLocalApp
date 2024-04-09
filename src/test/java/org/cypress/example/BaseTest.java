@@ -34,19 +34,6 @@ public class BaseTest {
     protected static User user;
     protected static User user1;
 
-    @After
-    public void afterEach() {
-        log.debug("================after================");
-        clearData();
-    }
-
-    @Before
-    public void beforeEach() {
-        log.debug("================before================");
-        clearData();
-    }
-
-
     protected static void createUsers() {
         user = new User();
         user.setFirstName("Adam");
