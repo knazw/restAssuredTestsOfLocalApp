@@ -28,7 +28,6 @@ public class NotificationTests extends BaseTransactionTest{
 
     @BeforeEach
     public void beforeEach() {
-
         addUserAndLogin();
     }
 
