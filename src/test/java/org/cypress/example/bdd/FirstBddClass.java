@@ -98,14 +98,15 @@ public class FirstBddClass extends BaseTest{
                     .post(pathLogin)
                 .then();
 
-        Response loginResponse = stepsData.validatableResponse
-                .extract().response();
-        JsonPath jsonPathEvaluator = loginResponse.jsonPath();
+    }
 
-        log.debug("user.id received from loginResponse " + jsonPathEvaluator.get("user.id"));
-//        loggedUserId = jsonPathEvaluator.get("user.id");
-        String cookieValue = loginResponse.header("Set-Cookie");
+    @And("Cookie can be obtained from response header")
+    public void CookieCanBeObtainedFromResponseHeader() {
+        Response response = stepsData.validatableResponse
+                .extract()
+                .response();
 
+        String cookieValue = response.header("Set-Cookie");
 
         String[] cookieHeaderArray = cookieValue.split(";");
         cookieValue = cookieHeaderArray[0];
@@ -177,7 +178,7 @@ public class FirstBddClass extends BaseTest{
 
     }
 
-    @And("Correct user object")
+    @And("Correct user object is received")
     public void CorrectUserObject() {
         Response response = stepsData.validatableResponse.assertThat()
                 .body(matchesJsonSchemaInClasspath("loggedUser.json"))

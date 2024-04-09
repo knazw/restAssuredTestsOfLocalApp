@@ -94,6 +94,12 @@ public class NotificationBddClass extends BaseTransactionTest {
 
     }
 
+    @And("Response message contains Unathorized")
+    public void ResponseMessageContainsUnathorized() {
+        //And Response message contains OK
+        stepsData.validatableResponse.body(containsString("Unauthorized"));
+    }
+
     @And("This like response contains correct userId for {string}")
     public void ThisLikeResponseContainsCorrectUser(String username) {
         JsonPath jsonPathEvaluator =  stepsData.validatableResponse.extract().response().jsonPath();

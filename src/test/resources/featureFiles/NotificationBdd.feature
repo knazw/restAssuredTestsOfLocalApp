@@ -5,6 +5,7 @@ Feature: Notification scenarios
     And "<username>" is created
     And "<username>" starts to login with credentials
     And 200 response code is received
+    And Cookie can be obtained from response header
     And Following user "<username1>"
     And "<username1>" is created
     And "<username>" creates a "<transaction>" transaction from user "<username>" to "<username1>" with <amount> and description "<description>"
@@ -36,6 +37,7 @@ Feature: Notification scenarios
     And "<username>" is created
     And "<username>" starts to login with credentials
     And 200 response code is received
+    And Cookie can be obtained from response header
     And Following user "<username1>"
     And "<username1>" is created
     And "<username>" creates a "<transaction>" transaction from user "<username>" to "<username1>" with <amount> and description "<description>"
