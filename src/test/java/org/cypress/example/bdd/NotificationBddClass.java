@@ -41,7 +41,7 @@ public class NotificationBddClass extends BaseTransactionTest {
 
     // And I create a "<transaction>" transaction from user "<username>" to "<username1>" with <amount> and description "<description>"
     @And("{string} creates a {string} transaction from user {string} to {string} with {int} and description {string}")
-    public void IHaveTheFollowingCredentials(String transactionType, String username, String username1, int amount, String description) {
+    public void IHaveTheFollowingCredentials(String usernameArg, String transactionType, String username, String username1, int amount, String description) {
         JsonDataReader jsonDataReader = new JsonDataReader();
 //        stepsData.user = jsonDataReader.getUserByUsername(username);
 //        stepsData.user1 = jsonDataReader.getUserByUsername(username1);
