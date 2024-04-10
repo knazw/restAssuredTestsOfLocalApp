@@ -13,7 +13,7 @@ Feature: Transaction scenarios
     And Transaction object is obtained from response
     And Correct transaction data are present in this object: "<username>", "<username1>", "<transaction>", <amount> and "<description>"
 #    And TransactionId of this transaction is saved for later use
-    And It is possible to obtain transactions by get transaction request
+    And It is possible to obtain transactions list by get transaction request
     And It is possible to obtain transaction from transactions list
     And It is possobie to compare obtained transaction with data: "<username>", "<username1>", "<transaction>", <amount> and "<description>"
     Examples:
