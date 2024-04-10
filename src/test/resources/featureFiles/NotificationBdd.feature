@@ -10,6 +10,7 @@ Feature: Notification scenarios
     And "<username1>" is created
     And "<username>" creates a "<transaction>" transaction from user "<username>" to "<username1>" with <amount> and description "<description>"
     And 200 response code is received
+    And Transaction object is obtained from response
     When "<username>" likes this transaction
     Then 200 response code is received
     And Response message contains OK
