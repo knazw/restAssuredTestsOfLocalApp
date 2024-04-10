@@ -28,10 +28,6 @@ public class BaseTest {
     protected static String pathUsers = "/users";
     protected static String pathLogin = "/login";
     public static String cookieValue = "";
-    protected static String userId0;
-    protected static String userId1;
-
-
 
 
     protected void clearData() {
