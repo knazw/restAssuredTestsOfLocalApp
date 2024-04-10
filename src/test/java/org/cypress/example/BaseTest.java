@@ -30,89 +30,9 @@ public class BaseTest {
     public static String cookieValue = "";
     protected static String userId0;
     protected static String userId1;
-    protected static String loggedUserId;
-    protected static User user;
-    protected static User user1;
-
-    protected static void createUsers() {
-        user = new User();
-        user.setFirstName("Adam");
-        user.setLastName("Nowak");
-        user.setUsername("username");
-        user.setPassword("12345678");
-        user.setConfirmPassword("12345678");
-
-        user1 = new User();
-        user1.setFirstName("Jan");
-        user1.setLastName("Kowalski");
-        user1.setUsername("username1");
-        user1.setPassword("12345678");
-        user1.setConfirmPassword("12345678");
-    }
-
-    protected void addUserAndLogin() {
-        RestAssured.given()
-                .baseUri(baseUri)
-                .body(user)
-                .contentType(ContentType.JSON)
-            .when()
-                .post("/users")
-            .then()
-                .statusCode(201);
-
-        //cookieValue
-        Response loginResponse = RestAssured.given()
-                .baseUri(baseUri)
-                .body(user)
-                .contentType(ContentType.JSON)
-            .when()
-                .post("/login")
-            .then()
-                .statusCode(200)
-                .extract().response();
-        JsonPath jsonPathEvaluator = loginResponse.jsonPath();
-
-        log.debug("user.id received from loginResponse " + jsonPathEvaluator.get("user.id"));
-        loggedUserId = jsonPathEvaluator.get("user.id");
-        cookieValue = loginResponse.header("Set-Cookie");
 
 
-        String[] cookieHeaderArray = cookieValue.split(";");
-        cookieValue = cookieHeaderArray[0];
 
-        Response response = RestAssured.given()
-                .baseUri(baseUri)
-                .body(user1)
-                .contentType(ContentType.JSON)
-            .when()
-                .post("/users")
-            .then()
-                .statusCode(201)
-                .extract().response();
-
-        jsonPathEvaluator = response.jsonPath();
-
-
-        log.debug("user.id received from Response " + jsonPathEvaluator.get("user.id"));
-        log.debug("user.username received from Response " + jsonPathEvaluator.get("user.username"));
-        userId1 = jsonPathEvaluator.get("user.id");
-
-        response = RestAssured.given()
-                .baseUri(baseUri)
-                .body(user)
-                .contentType(ContentType.JSON)
-            .when()
-                .post("/users")
-            .then()
-                .statusCode(201)
-                .extract().response();
-
-        jsonPathEvaluator = response.jsonPath();
-
-        log.debug("user.id received from Response " + jsonPathEvaluator.get("user.id"));
-        log.debug("user.username received from Response " + jsonPathEvaluator.get("user.username"));
-        userId0 = jsonPathEvaluator.get("user.id");
-    }
 
     protected void clearData() {
         RestAssured.given()

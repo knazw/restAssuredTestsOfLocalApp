@@ -10,8 +10,7 @@ import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.cypress.example.BaseTransactionTest;
-import org.cypress.example.model.TransactionCreated;
+import org.cypress.example.BaseTest;
 import org.cypress.example.model.TransactionGet;
 import org.cypress.example.models.CreateTransaction;
 import org.cypress.example.models.LikeTransaction;
@@ -27,7 +26,7 @@ import static java.lang.invoke.MethodHandles.lookup;
 import static org.hamcrest.Matchers.containsString;
 import static org.slf4j.LoggerFactory.getLogger;
 
-public class NotificationBddClass extends BaseTransactionTest {
+public class NotificationBddClass extends BaseTest {
 
     static final Logger log = getLogger(lookup().lookupClass());
     private StepsData stepsData;
@@ -56,7 +55,7 @@ public class NotificationBddClass extends BaseTransactionTest {
 //        stepsData.user = jsonDataReader.getUserByUsername(username);
 //        stepsData.user1 = jsonDataReader.getUserByUsername(username1);
 
-        createTransaction = new CreateTransaction();
+        CreateTransaction createTransaction = new CreateTransaction();
         createTransaction.senderId = stepsData.UsersIdMap.get(username).id;
         createTransaction.receiverId = stepsData.UsersIdMap.get(username1).id;
         createTransaction.amount = amount + "";

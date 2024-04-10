@@ -65,7 +65,7 @@ public class TransactionBddClass extends BaseTest {
 
     }
 
-    @And("It is possible to obtain transactions by get transaction request")
+    @And("It is possible to obtain transactions list by get transaction request")
     public void ItIsPossibleToObtainThisTransactionByGetTransactionRequest() {
         this.stepsData.validatableResponse = RestAssured.given(SpecBuilder.getRequestSpec(this.stepsData.cookieValue))
                 .when()
