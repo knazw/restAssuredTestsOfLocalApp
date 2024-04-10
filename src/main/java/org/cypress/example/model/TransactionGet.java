@@ -5,7 +5,7 @@ import java.util.List;
 public class TransactionGet {
     public String receiverName;
     public String senderName;
-    public List<String> likes;
+    public List<Like> likes;
     public List<String> comments;
     public String id;
     public String uuid;
@@ -20,7 +20,7 @@ public class TransactionGet {
     public TransactionGet() {
 
     }
-    public TransactionGet(String receiverName, String senderName, List<String> likes, List<String> comments, String id, String uuid, int amount, String description, String receiverId, String senderId, String status, String createdAt, String modifiedAt) {
+    public TransactionGet(String receiverName, String senderName, List<Like> likes, List<String> comments, String id, String uuid, int amount, String description, String receiverId, String senderId, String status, String createdAt, String modifiedAt) {
         this.receiverName = receiverName;
         this.senderName = senderName;
         this.likes = likes;
@@ -52,11 +52,11 @@ public class TransactionGet {
         this.senderName = senderName;
     }
 
-    public List<String> getLikes() {
+    public List<Like> getLikes() {
         return likes;
     }
 
-    public void setLikes(List<String> likes) {
+    public void setLikes(List<Like> likes) {
         this.likes = likes;
     }
 

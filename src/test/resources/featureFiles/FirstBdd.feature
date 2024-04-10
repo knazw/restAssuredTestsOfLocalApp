@@ -13,6 +13,7 @@ Feature: Login scenarios
 
   Scenario Outline: User with account is not able to login when incorrect data are send
     Given Following user "<username>"
+    And "<username>" is created
     When "<username>" starts to login with credentials from file "<file>"
     Then <status code> response code is received
     And Response message "<response>"

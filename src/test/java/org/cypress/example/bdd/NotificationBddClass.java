@@ -1,5 +1,7 @@
 package org.cypress.example.bdd;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
@@ -9,6 +11,8 @@ import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.cypress.example.BaseTransactionTest;
+import org.cypress.example.model.TransactionCreated;
+import org.cypress.example.model.TransactionGet;
 import org.cypress.example.models.CreateTransaction;
 import org.cypress.example.models.LikeTransaction;
 import org.cypress.example.models.UpdateNotification;
@@ -108,10 +112,13 @@ public class NotificationBddClass extends BaseTransactionTest {
 
     @And("This like response contains correct userId for {string}")
     public void ThisLikeResponseContainsCorrectUser(String username) {
-        JsonPath jsonPathEvaluator =  stepsData.validatableResponse.extract().response().jsonPath();
-
-        String likeUserId = jsonPathEvaluator.get("results[0].likes[0].userId");
-        String likeId = jsonPathEvaluator.get("results[0].likes[0].id");
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<TransactionGet> transactionGetList = objectMapper.convertValue(stepsData.validatableResponse.extract().
+                response().jsonPath().get("results"),  new TypeReference<List<TransactionGet>>(){});
+        TransactionGet transactionGet = transactionGetList.stream()
+                .filter(transactionGetItem -> transactionGetItem.id.equals(this.stepsData.transactionCreated.id))
+                .findFirst().get();
+        String likeUserId = transactionGet.likes.get(0).userId;
 
         Assertions.assertEquals(stepsData.UsersIdMap.get(username).id, likeUserId);
     }
