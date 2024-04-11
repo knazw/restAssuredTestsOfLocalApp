@@ -80,7 +80,7 @@ public class LoginBDDClass extends BaseTest{
 
 
     @Given("Following user {string}")
-    public void IHaveTheFollowingCredentials(String username) {
+    public void FollowingUser(String username) {
         JsonDataReader jsonDataReader = new JsonDataReader();
         stepsData.user = jsonDataReader.getUserByUsername(username);
     }
@@ -127,7 +127,7 @@ public class LoginBDDClass extends BaseTest{
     }
 
     @When("{string} starts to login with no credentials")
-    public void IStartToLoginWithNoCredentials(String username) {
+    public void UserStartsToLoginWithNoCredentials(String username) {
         stepsData.validatableResponse = RestAssured
                 .given(BaseTest.SpecBuilder.getRequestSpec())
                     .baseUri(baseUri)
@@ -138,7 +138,7 @@ public class LoginBDDClass extends BaseTest{
     }
 
     @Then("{int} response code is received")
-    public void IReceiveResponseCode(int statusCode) {
+    public void ResponseCodeIsReceived(int statusCode) {
         stepsData.validatableResponse.statusCode(statusCode);
     }
 

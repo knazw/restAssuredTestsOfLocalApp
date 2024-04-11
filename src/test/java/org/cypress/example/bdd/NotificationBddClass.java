@@ -37,10 +37,8 @@ public class NotificationBddClass extends BaseTest {
 
     // And I create a "<transaction>" transaction from user "<username>" to "<username1>" with <amount> and description "<description>"
     @And("{string} creates a {string} transaction from user {string} to {string} with {int} and description {string}")
-    public void IHaveTheFollowingCredentials(String usernameArg, String transactionType, String username, String username1, int amount, String description) {
+    public void UserCreatesTransactionWithAmountAndDescription(String usernameArg, String transactionType, String username, String username1, int amount, String description) {
         JsonDataReader jsonDataReader = new JsonDataReader();
-//        stepsData.user = jsonDataReader.getUserByUsername(username);
-//        stepsData.user1 = jsonDataReader.getUserByUsername(username1);
 
         CreateTransaction createTransaction = new CreateTransaction();
         createTransaction.senderId = stepsData.UsersIdMap.get(username).id;
@@ -57,7 +55,7 @@ public class NotificationBddClass extends BaseTest {
     }
 
     @When("{string} likes this transaction")
-    public void ILikeThisTransaction(String username) {
+    public void UserLikesTransaction(String username) {
         JsonPath jsonPathEvaluator = stepsData.validatableResponse.extract().jsonPath();
         String postTransactionId = jsonPathEvaluator.get("transaction.id");
 
