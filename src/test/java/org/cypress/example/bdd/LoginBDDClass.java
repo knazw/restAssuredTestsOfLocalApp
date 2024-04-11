@@ -149,19 +149,27 @@ public class LoginBDDClass extends BaseTest{
 
     @And("{string} is created")
     public void UserIsCreated(String username) {
-         Response response       = RestAssured
+         this.stepsData.validatableResponse = RestAssured
                 .given(BaseTest.SpecBuilder.getRequestSpec())
                     .baseUri(baseUri)
                     .body(stepsData.user)
                     .contentType(ContentType.JSON)
                 .when()
                     .post(pathUsers)
-                .then()
-                    .statusCode(201)
-                    .assertThat()
-                    .body(matchesJsonSchemaInClasspath("createdUser.json"))
-                    .extract()
-                    .response();
+                .then();
+
+    }
+
+    @And("Json in response body matches createdUser.json")
+    public void JsonInResponseBodyMatchesCreatedUserJson(){
+        this.stepsData.validatableResponse.assertThat()
+                .body(matchesJsonSchemaInClasspath("createdUser.json"));
+    }
+
+    @And("Response object is properly validated as an user object of an user {string}")
+    public void ResponseObjectIsProperlyValidatedAsAnUserObject(String username) {
+        Response response = this.stepsData.validatableResponse.extract().response();
+
         ObjectMapper objectMapper = new ObjectMapper();
         UserCreated userCreated = objectMapper.convertValue(response.jsonPath().get("user"),UserCreated.class);
         log.debug("userCreated: "+userCreated.toString());
@@ -173,7 +181,6 @@ public class LoginBDDClass extends BaseTest{
         Assertions.assertTrue(UUID.fromString(userCreated.getUuid()) != null);
 
         stepsData.UsersIdMap.put(username, userCreated);
-
     }
 
     @And("Correct user object is received")
