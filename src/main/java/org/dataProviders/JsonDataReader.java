@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class JsonDataReader {
-    private final String userFilePath = PropertiesStorage.getInstance("").getJsonsPath() + "Users.json";
+    private final String userFilePath = PropertiesStorage.getInstance().getJsonsPath() + "Users.json";
     private List<User> userList;
 
     public JsonDataReader(){
@@ -39,7 +39,7 @@ public class JsonDataReader {
     }
 
     public static final String getInvalidUser(String fileName) {
-        String path = PropertiesStorage.getInstance("").getJsonsPath();
+        String path = PropertiesStorage.getInstance().getJsonsPath();
 
 
         return readJsonFile(path + fileName);

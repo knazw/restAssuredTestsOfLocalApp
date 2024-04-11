@@ -48,11 +48,13 @@ public class LoginBDDClass extends BaseTest{
 
     @After
     public void afterEach() {
+        log.debug("\n\n\n============after each============\n\n\n");
         clearData();
     }
 
     @Before
     public void beforeEach() {
+        log.debug("\n\n\n============before each============\n\n\n");
         clearData();
     }
 
@@ -66,7 +68,7 @@ public class LoginBDDClass extends BaseTest{
         try (BufferedReader reader = new BufferedReader(new FileReader(configPath))) {
             properties.load(reader);
 
-            PropertiesStorage propertiesStorage = PropertiesStorage.getInstance("");
+            PropertiesStorage propertiesStorage = PropertiesStorage.getInstance();
             propertiesStorage.setProperties(properties);
         }
         catch (IOException e) {
@@ -78,7 +80,7 @@ public class LoginBDDClass extends BaseTest{
 
 
     @Given("Following user {string}")
-    public void IHaveTheFollowingCredentials(String username) {
+    public void FollowingUser(String username) {
         JsonDataReader jsonDataReader = new JsonDataReader();
         stepsData.user = jsonDataReader.getUserByUsername(username);
     }
@@ -125,7 +127,7 @@ public class LoginBDDClass extends BaseTest{
     }
 
     @When("{string} starts to login with no credentials")
-    public void IStartToLoginWithNoCredentials(String username) {
+    public void UserStartsToLoginWithNoCredentials(String username) {
         stepsData.validatableResponse = RestAssured
                 .given(BaseTest.SpecBuilder.getRequestSpec())
                     .baseUri(baseUri)
@@ -136,7 +138,7 @@ public class LoginBDDClass extends BaseTest{
     }
 
     @Then("{int} response code is received")
-    public void IReceiveResponseCode(int statusCode) {
+    public void ResponseCodeIsReceived(int statusCode) {
         stepsData.validatableResponse.statusCode(statusCode);
     }
 
