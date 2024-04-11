@@ -33,7 +33,7 @@ import static java.lang.invoke.MethodHandles.lookup;
 import static org.hamcrest.Matchers.containsString;
 import static org.slf4j.LoggerFactory.getLogger;
 
-public class FirstBddClass extends BaseTest{
+public class LoginBDDClass extends BaseTest{
 
     private static String configPath = "configs//application.properties";
     static final Logger log = getLogger(lookup().lookupClass());
@@ -42,7 +42,7 @@ public class FirstBddClass extends BaseTest{
 
     private StepsData stepsData;
 
-    public FirstBddClass(StepsData stepsData) {
+    public LoginBDDClass(StepsData stepsData) {
         this.stepsData = stepsData;
     }
 
