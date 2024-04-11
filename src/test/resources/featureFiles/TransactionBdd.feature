@@ -3,11 +3,17 @@ Feature: Transaction scenarios
   Scenario Outline: User is able to create transaction
     Given Following user "<username>"
     And "<username>" is created
+    And 201 response code is received
+    And Json in response body matches createdUser.json
+    And Response object is properly validated as an user object of an user "<username>"
     And "<username>" starts to login with credentials
     And 200 response code is received
     And Cookie can be obtained from response header
     And Following user "<username1>"
     And "<username1>" is created
+    And 201 response code is received
+    And Json in response body matches createdUser.json
+    And Response object is properly validated as an user object of an user "<username1>"
     When "<username>" creates a "<transaction>" transaction from user "<username>" to "<username1>" with <amount> and description "<description>"
     Then 200 response code is received
     And Transaction object is obtained from response
