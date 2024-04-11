@@ -25,6 +25,7 @@ Feature: Login scenarios
 
   Scenario Outline: User with account is not able to login when no data are send
     Given Following user "<username>"
+    And "<username>" is created
     When "<username>" starts to login with no credentials
     Then <status code> response code is received
     And Response message "<response>"
