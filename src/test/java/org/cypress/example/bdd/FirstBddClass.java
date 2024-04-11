@@ -2,6 +2,7 @@ package org.cypress.example.bdd;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.After;
+import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
 import io.cucumber.java.BeforeAll;
 import io.cucumber.java.en.And;
@@ -48,18 +49,19 @@ public class FirstBddClass extends BaseTest{
 
     @After
     public void afterEach() {
-        clearData();
+//        clearData();
     }
 
     @Before
     public void beforeEach() {
-        clearData();
+//        clearData();
     }
 
 
     @BeforeAll
     public static void setupAll() {
-        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter(), new ErrorLoggingFilter(), new AllureRestAssured());
+//        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter(), new ErrorLoggingFilter(), new AllureRestAssured());
+        RestAssured.filters(new AllureRestAssured());
 
 
         Properties properties = new Properties();
@@ -74,7 +76,10 @@ public class FirstBddClass extends BaseTest{
         }
     }
 
-
+    @AfterAll
+    public static void teardownAll() {
+        clearData();
+    }
 
 
     @Given("Following user {string}")

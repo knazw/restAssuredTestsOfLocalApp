@@ -10,6 +10,7 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.cypress.example.model.User;
+import org.dataProviders.CounterSingleton;
 import org.slf4j.Logger;
 
 import static java.lang.invoke.MethodHandles.lookup;
@@ -30,7 +31,12 @@ public class BaseTest {
     public static String cookieValue = "";
 
 
-    protected void clearData() {
+    protected static void clearData() {
+        int tmp = CounterSingleton.getInstance("").decreaseAndGetValue();
+        if(tmp > 0){
+            return;
+        }
+
         RestAssured.given()
                 .baseUri(baseUri)
                 .contentType(ContentType.JSON)

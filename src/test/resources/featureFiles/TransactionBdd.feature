@@ -17,6 +17,6 @@ Feature: Transaction scenarios
     And It is possible to obtain transaction from transactions list
     And It is possobie to compare obtained transaction with data: "<username>", "<username1>", "<transaction>", <amount> and "<description>"
     Examples:
-      | username  | username1 | transaction | amount | description |
-      | username  | username1 | payment     | 100    | note 1      |
-      | username1 | username  | payment     | 200    | note 1      |
+      | username    | username1   | transaction | amount | description |
+      | usernamep13 | usernamep14 | payment     | 100    | note 1      |
+      | usernamep15 | usernamep16 | payment     | 200    | note 1      |

@@ -25,12 +25,12 @@ Feature: Notification scenarios
     And 204 response code is received
     And It is possible to send get notification request
     And 200 response code is received
-    And 0 objects are returned after get notification request
+    And 0 objects are returned after get notification request for "<username>"
 
     Examples:
-      | username  | username1 | transaction | amount | description |
-      | username  | username1 | payment     | 100    | note 1      |
-      | username1 | username  | payment     | 200    | note 1      |
+      | username   | username1  | transaction | amount | description |
+      | usernamep5 | usernamep6 | payment     | 100    | note 1      |
+      | usernamep7 | usernamep8 | payment     | 200    | note 1      |
 
 
   Scenario Outline: Only one notification is read from a group of 3 notifications
@@ -52,14 +52,14 @@ Feature: Notification scenarios
     And "<username>" likes this transaction
     And It is possible to send get notification request
     And 200 response code is received
-    And 3 objects are returned after get notification request
+    And 3 objects are returned after get notification request for "<username>"
     And <notificationNr> is choosen
     When Notification is read
     Then 204 response code is received
     And It is possible to send get notification request
     And 200 response code is received
-    And 2 objects are returned after get notification request
+    And 2 objects are returned after get notification request for "<username>"
     Examples:
-      | username  | username1 | transaction | amount | description | notificationNr |
-      | username  | username1 | payment     | 100    | note 1      | 1              |
-      | username1 | username  | payment     | 200    | note 1      | 2              |
+      | username    | username1   | transaction | amount | description | notificationNr |
+      | usernamep9  | usernamep10 | payment     | 100    | note 1      | 1              |
+      | usernamep11 | usernamep12 | payment     | 200    | note 1      | 2              |

@@ -12,6 +12,7 @@ import org.junit.platform.suite.api.Suite;
 @ConfigurationParameter(key = Constants.EXECUTION_DRY_RUN_PROPERTY_NAME,value = "false")
 @ConfigurationParameter(key = Constants.PLUGIN_PROPERTY_NAME,value = "pretty, html:target/cucumber-report/cucumber.html")
 @ConfigurationParameter(key = Constants.PLUGIN_PROPERTY_NAME, value = "pretty,io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm")
+@ConfigurationParameter(key = Constants.PLUGIN_PROPERTY_NAME, value = "pretty,org.cypress.example.TestEventHandlerPlugin")
 @ConfigurationParameter(key = Constants.PLUGIN_PUBLISH_QUIET_PROPERTY_NAME, value = "true")
 public class FirstGlueFile {
 }

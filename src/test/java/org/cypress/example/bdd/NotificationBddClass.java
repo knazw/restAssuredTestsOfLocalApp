@@ -3,6 +3,7 @@ package org.cypress.example.bdd;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.After;
+import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -11,6 +12,7 @@ import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.cypress.example.BaseTest;
+import org.cypress.example.model.NotificationGet;
 import org.cypress.example.model.TransactionGet;
 import org.cypress.example.models.CreateTransaction;
 import org.cypress.example.models.LikeTransaction;
@@ -21,6 +23,7 @@ import org.slf4j.Logger;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.hamcrest.Matchers.containsString;
@@ -34,12 +37,17 @@ public class NotificationBddClass extends BaseTest {
     @After
     public void afterEach() {
         log.debug("================after================");
-        clearData();
+//        clearData();
     }
 
     @Before
     public void beforeEach() {
         log.debug("================before================");
+//        clearData();
+    }
+
+    @AfterAll
+    public static void teardownAll() {
         clearData();
     }
 
@@ -161,10 +169,17 @@ public class NotificationBddClass extends BaseTest {
                 .then();
     }
 
-    @And("{int} objects are returned after get notification request")
-    public void IntObjectsAreReturnedAfterGetNotificationRequest(int quantity) {
-        JsonPath jsonPathEvaluator = stepsData.validatableResponse.extract().jsonPath();
-        List<Map<String, Object>> results = jsonPathEvaluator.get("results");
+    @And("{int} objects are returned after get notification request for {string}")
+    public void IntObjectsAreReturnedAfterGetNotificationRequest(int quantity, String username) {
+//        JsonPath jsonPathEvaluator = stepsData.validatableResponse.extract().jsonPath();
+//        List<Map<String, Object>> results = jsonPathEvaluator.get("results");
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<NotificationGet> notificationGetList = objectMapper.convertValue(stepsData.validatableResponse.extract().jsonPath().get("results"), new TypeReference<List<NotificationGet>>(){});
+        List<NotificationGet> results = notificationGetList.stream().
+                filter(item -> item.userId.equals(this.stepsData.UsersIdMap.get(username).id))
+                        .collect(Collectors.toList());
+
 
         Assertions.assertEquals(quantity, results.size());
     }

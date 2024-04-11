@@ -3,6 +3,7 @@ package org.cypress.example.bdd;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.After;
+import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.restassured.RestAssured;
@@ -25,12 +26,17 @@ public class TransactionBddClass extends BaseTest {
     @After
     public void afterEach() {
         log.debug("================after================");
-        clearData();
+//        clearData();
     }
 
     @Before
     public void beforeEach() {
         log.debug("================before================");
+//        clearData();
+    }
+
+    @AfterAll
+    public static void teardownAll() {
         clearData();
     }
 

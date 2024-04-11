@@ -18,10 +18,10 @@ Feature: Login scenarios
     Then <status code> response code is received
     And Response message "<response>"
     Examples:
-      | username | file                                          | status code | response    |
-      | username | UsersInvalid/UsernamePasswordEmpty.json       | 400         | Bad Request |
-      | username | UsersInvalid/UsernamePasswordNotProvided.json | 400         | Bad Request |
-      | username | UsersInvalid/UsernameAndPasswordEmpty.json    | 400         | Bad Request |
+      | username  | file                                          | status code | response    |
+      | usernamep | UsersInvalid/UsernamePasswordEmpty.json       | 400         | Bad Request |
+      | usernamep | UsersInvalid/UsernamePasswordNotProvided.json | 400         | Bad Request |
+      | usernamep | UsersInvalid/UsernameAndPasswordEmpty.json    | 400         | Bad Request |
 
   Scenario Outline: User with account is not able to login when no data are send
     Given Following user "<username>"
@@ -29,8 +29,8 @@ Feature: Login scenarios
     Then <status code> response code is received
     And Response message "<response>"
     Examples:
-      | username | status code | response    |
-      | username |  400        | Bad Request |
+      | username   | status code | response    |
+      | usernamep1 |  400        | Bad Request |
 
 
   Scenario Outline: User with account is able to login
@@ -41,8 +41,8 @@ Feature: Login scenarios
     And Correct user object is received
     And Cookie can be obtained from response header
     Examples:
-      | username        |
-      | notexistingUser |
-      | username1       |
-      | username        |
+      | username    |
+      | usernamep2  |
+      | usernamep3  |
+      | usernamep4  |
 
