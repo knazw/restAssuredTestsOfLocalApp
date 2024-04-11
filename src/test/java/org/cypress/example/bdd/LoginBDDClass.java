@@ -48,11 +48,13 @@ public class LoginBDDClass extends BaseTest{
 
     @After
     public void afterEach() {
+        log.debug("\n\n\n============after each============\n\n\n");
         clearData();
     }
 
     @Before
     public void beforeEach() {
+        log.debug("\n\n\n============before each============\n\n\n");
         clearData();
     }
 
@@ -66,7 +68,7 @@ public class LoginBDDClass extends BaseTest{
         try (BufferedReader reader = new BufferedReader(new FileReader(configPath))) {
             properties.load(reader);
 
-            PropertiesStorage propertiesStorage = PropertiesStorage.getInstance("");
+            PropertiesStorage propertiesStorage = PropertiesStorage.getInstance();
             propertiesStorage.setProperties(properties);
         }
         catch (IOException e) {

@@ -22,18 +22,6 @@ public class TransactionBddClass extends BaseTest {
     static final Logger log = getLogger(lookup().lookupClass());
     private StepsData stepsData;
 
-    @After
-    public void afterEach() {
-        log.debug("================after================");
-        clearData();
-    }
-
-    @Before
-    public void beforeEach() {
-        log.debug("================before================");
-        clearData();
-    }
-
     public TransactionBddClass(StepsData stepsData) {
         this.stepsData = stepsData;
     }

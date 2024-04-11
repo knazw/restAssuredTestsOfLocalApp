@@ -35,6 +35,7 @@ public class BaseTest {
 
 
     protected void clearData() {
+        log.debug("clear data start");
         RestAssured.given()
                 .baseUri(baseUri)
                 .contentType(ContentType.JSON)
@@ -43,6 +44,7 @@ public class BaseTest {
             .then()
                 .statusCode(200)
                 .body(containsString("OK"));
+        log.debug("clear data end");
     }
 
     protected static class SpecBuilder {
