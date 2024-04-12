@@ -19,5 +19,12 @@
     "username": "notexistingUser",
     "password": "12345678",
     "confirmPassword": "12345678"
+  },
+  {
+    "firstName": "Michal",
+    "lastName": "Nazwisko",
+    "username": "userForChecks",
+    "password": "12345678",
+    "confirmPassword": "12345678"
   }
 ]
