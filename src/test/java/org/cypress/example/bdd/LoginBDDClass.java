@@ -114,7 +114,7 @@ public class LoginBDDClass extends BaseTest{
 
     @When("{string} starts to login with credentials from file {string}")
     public void WhenIStartToLoginWithCredentialsFromFile(String username, String fileName) {
-        String jsonInvalidUser = JsonDataReader.getInvalidUser(fileName);
+        String jsonInvalidUser = JsonDataReader.getJsonFile(fileName);
 
         stepsData.validatableResponse = RestAssured
                 .given(BaseTest.SpecBuilder.getRequestSpec())

@@ -38,7 +38,7 @@ public class JsonDataReader {
         return userList.stream().filter(x -> x.getUsername().equalsIgnoreCase(username)).findAny().get();
     }
 
-    public static final String getInvalidUser(String fileName) {
+    public static final String getJsonFile(String fileName) {
         String path = PropertiesStorage.getInstance().getJsonsPath();
 
 
