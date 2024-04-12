@@ -12,13 +12,17 @@ import org.cypress.example.model.TransactionGet;
 import org.cypress.example.model.UserGet;
 import org.dataProviders.JsonDataReader;
 import org.junit.jupiter.api.Assertions;
+import org.slf4j.Logger;
 
 import java.util.List;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static java.lang.invoke.MethodHandles.lookup;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class RegistrationBddClass extends BaseTest{
 
+    static final Logger log = getLogger(lookup().lookupClass());
     StepsData stepsData;
 
     public RegistrationBddClass(StepsData stepsData) {

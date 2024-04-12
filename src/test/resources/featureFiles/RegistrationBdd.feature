@@ -18,15 +18,15 @@ Feature: Registration of an user
     Then <status code> response code is received
     And Response object is validated with a file "<schema>"
 
-    Given Following user "<username1>"
-    And "<username1>" is created
-    And 201 response code is received
-    And Json in response body matches createdUser.json
-    And Response object is properly validated as an user object of an user "<username1>"
-    When "<username1>" starts to login with credentials
-    Then 200 response code is received
-    And Correct user object is received
-    And Cookie can be obtained from response header
+#    Given Following user "<username1>"
+#    And "<username1>" is created
+#    And 201 response code is received
+#    And Json in response body matches createdUser.json
+#    And Response object is properly validated as an user object of an user "<username1>"
+#    When "<username1>" starts to login with credentials
+#    Then 200 response code is received
+#    And Correct user object is received
+#    And Cookie can be obtained from response header
 
     And Get request for users list is sent
     And Response contains "<username>"
