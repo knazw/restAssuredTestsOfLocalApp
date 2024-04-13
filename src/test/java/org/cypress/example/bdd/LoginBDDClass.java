@@ -61,7 +61,11 @@ public class LoginBDDClass extends BaseTest{
 
     @BeforeAll
     public static void setupAll() {
-        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter(), new ErrorLoggingFilter(), new AllureRestAssured());
+
+        if(RestAssured.filters().size() == 0) {
+            RestAssured.filters(new AllureRestAssured());
+        }
+//        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter(), new ErrorLoggingFilter(), new AllureRestAssured());
 
 
         Properties properties = new Properties();
