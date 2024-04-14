@@ -38,8 +38,6 @@ public class LoginBDDClass extends BaseTest{
     private static String configPath = "configs//application.properties";
     static final Logger log = getLogger(lookup().lookupClass());
 
-    private static List<User> users;
-
     private StepsData stepsData;
 
     public LoginBDDClass(StepsData stepsData) {
@@ -102,20 +100,6 @@ public class LoginBDDClass extends BaseTest{
 
     }
 
-    @And("Cookie can be obtained from response header")
-    public void CookieCanBeObtainedFromResponseHeader() {
-        Response response = stepsData.validatableResponse
-                .extract()
-                .response();
-
-        String cookieValue = response.header("Set-Cookie");
-
-        String[] cookieHeaderArray = cookieValue.split(";");
-        cookieValue = cookieHeaderArray[0];
-
-        stepsData.cookieValue = cookieValue;
-    }
-
     @When("{string} starts to login with credentials from file {string}")
     public void WhenIStartToLoginWithCredentialsFromFile(String username, String fileName) {
         String jsonInvalidUser = JsonDataReader.getJsonFile(fileName);
@@ -139,16 +123,6 @@ public class LoginBDDClass extends BaseTest{
                 .when()
                     .post(pathLogin)
                 .then();
-    }
-
-    @Then("{int} response code is received")
-    public void ResponseCodeIsReceived(int statusCode) {
-        stepsData.validatableResponse.statusCode(statusCode);
-    }
-
-    @And("Response message {string}")
-    public void ResponseMessage(String string) {
-        stepsData.validatableResponse.body(containsString(string));
     }
 
     @And("{string} is created")

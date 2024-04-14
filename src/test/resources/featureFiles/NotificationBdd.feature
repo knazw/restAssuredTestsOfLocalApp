@@ -26,7 +26,7 @@ Feature: Notification scenarios
     And This like response contains correct transactionId
     And It is possible to send get notification request
     And 200 response code is received
-    And This is possible to obtain notificationId from get notification response
+    And It is possible to obtain notificationId from get notification response
     And Notification is read
     And 204 response code is received
     And It is possible to send get notification request

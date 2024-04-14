@@ -35,7 +35,6 @@ public class NotificationBddClass extends BaseTest {
         this.stepsData = stepsData;
     }
 
-    // And I create a "<transaction>" transaction from user "<username>" to "<username1>" with <amount> and description "<description>"
     @And("{string} creates a {string} transaction from user {string} to {string} with {int} and description {string}")
     public void UserCreatesTransactionWithAmountAndDescription(String usernameArg, String transactionType, String username, String username1, int amount, String description) {
         JsonDataReader jsonDataReader = new JsonDataReader();
@@ -74,11 +73,6 @@ public class NotificationBddClass extends BaseTest {
 
     }
 
-    @And("Response message contains OK")
-    public void ResponseMessageContainsOK() {
-        stepsData.validatableResponse.body(containsString("OK"));
-    }
-
     @And("It is possible to obtain this like by get transaction request")
     public void ItIspossibleToObtainThisLikeByGetRequest() {
         stepsData.validatableResponse = RestAssured.given(SpecBuilder.getRequestSpec(stepsData.cookieValue))
@@ -86,12 +80,6 @@ public class NotificationBddClass extends BaseTest {
                     .get(pathTransactions)
                 .then();
 
-    }
-
-    @And("Response message contains Unathorized")
-    public void ResponseMessageContainsUnathorized() {
-        //And Response message contains OK
-        stepsData.validatableResponse.body(containsString("Unauthorized"));
     }
 
     @And("This like response contains correct userId for {string}")
@@ -126,7 +114,7 @@ public class NotificationBddClass extends BaseTest {
         // todo get notification List<T> instead of json
     }
 
-    @And("This is possible to obtain notificationId from get notification response")
+    @And("It is possible to obtain notificationId from get notification response")
     public void ThisIsPossibleToObtainNotificationIdFromGetNotificationResponse() {
         Response response = stepsData.validatableResponse.extract().response();
         stepsData.notificationId = response.jsonPath().get("results[0].id");
