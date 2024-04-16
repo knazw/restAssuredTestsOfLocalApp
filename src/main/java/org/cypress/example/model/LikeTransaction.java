@@ -1,4 +1,4 @@
-package org.cypress.example.models;
+package org.cypress.example.model;
 
 public class LikeTransaction {
     public String transactionId;
