@@ -6,7 +6,7 @@ import org.cypress.example.model.TransactionCreated;
 import org.cypress.example.model.TransactionGet;
 import org.cypress.example.model.User;
 import org.cypress.example.model.UserCreated;
-import org.cypress.example.models.LikeTransaction;
+import org.cypress.example.model.LikeTransaction;
 
 import java.util.HashMap;
 

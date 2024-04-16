@@ -2,19 +2,16 @@ package org.cypress.example.bdd;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.cypress.example.BaseTest;
 import org.cypress.example.model.TransactionGet;
-import org.cypress.example.models.CreateTransaction;
-import org.cypress.example.models.LikeTransaction;
-import org.cypress.example.models.UpdateNotification;
+import org.cypress.example.model.CreateTransaction;
+import org.cypress.example.model.LikeTransaction;
+import org.cypress.example.model.UpdateNotification;
 import org.dataProviders.JsonDataReader;
 import org.junit.jupiter.api.Assertions;
 import org.slf4j.Logger;
@@ -23,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 
 import static java.lang.invoke.MethodHandles.lookup;
-import static org.hamcrest.Matchers.containsString;
 import static org.slf4j.LoggerFactory.getLogger;
 
 public class NotificationBddClass extends BaseTest {

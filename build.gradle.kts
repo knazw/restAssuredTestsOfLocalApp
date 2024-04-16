@@ -20,7 +20,7 @@ val agent: Configuration by configurations.creating {
 
 dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
-
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
 
 
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
