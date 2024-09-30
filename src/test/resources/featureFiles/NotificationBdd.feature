@@ -75,3 +75,99 @@ Feature: Notification scenarios
       | username  | username1 | transaction | amount | description | notificationNr |
       | username  | username1 | payment     | 100    | note 1      | 1              |
       | username1 | username  | payment     | 200    | note 1      | 2              |
+
+
+  Scenario Outline: It is possible to read not mine notification
+    Given Following user "<username>"
+    And "<username>" is created
+    And 201 response code is received
+    And Json in response body matches createdUser.json
+    And Response object is properly validated as an user object of an user "<username>"
+    And "<username>" starts to login with credentials
+    And 200 response code is received
+    And Cookie can be obtained from response header
+    And Following user "<username1>"
+    And "<username1>" is created
+    And 201 response code is received
+    And Json in response body matches createdUser.json
+    And Response object is properly validated as an user object of an user "<username1>"
+    And Following user "<username2>"
+    And "<username2>" is created
+    And 201 response code is received
+    And Json in response body matches createdUser.json
+    And Response object is properly validated as an user object of an user "<username2>"
+
+    And "<username2>" starts to login with credentials
+    And 200 response code is received
+    And Cookie can be obtained from response header for "<username2>"
+
+    And "<username>" creates a "<transaction>" transaction from user "<username>" to "<username1>" with <amount> and description "<description>"
+    And 200 response code is received
+    And "<username>" likes this transaction
+    And "<username>" creates a "<transaction>" transaction from user "<username>" to "<username1>" with <amount> and description "<description>"
+    And 200 response code is received
+    And "<username>" likes this transaction
+    And "<username>" creates a "<transaction>" transaction from user "<username>" to "<username1>" with <amount> and description "<description>"
+    And 200 response code is received
+    And "<username>" likes this transaction
+    And It is possible to send get notification request
+    And 200 response code is received
+    And 3 objects are returned after get notification request
+    And <notificationNr> is choosen
+    When Notification is read by "<username2>"
+    Then 204 response code is received
+    And It is possible to send get notification request
+    And 200 response code is received
+    And 2 objects are returned after get notification request
+    Examples:
+      | username  | username1 | username2 | transaction | amount | description | notificationNr |
+      | username  | username1 | username2 | payment     | 100    | note 1      | 1              |
+      | username1 | username  | username3 | payment     | 200    | note 1      | 2              |
+      | username1 | username  | username3 | payment     | 200    | note 1      | 0              |
+
+
+  Scenario Outline: It is not possible to read not existing notification
+    Given Following user "<username>"
+    And "<username>" is created
+    And 201 response code is received
+    And Json in response body matches createdUser.json
+    And Response object is properly validated as an user object of an user "<username>"
+    And "<username>" starts to login with credentials
+    And 200 response code is received
+    And Cookie can be obtained from response header
+    And Following user "<username1>"
+    And "<username1>" is created
+    And 201 response code is received
+    And Json in response body matches createdUser.json
+    And Response object is properly validated as an user object of an user "<username1>"
+    And Following user "<username2>"
+    And "<username2>" is created
+    And 201 response code is received
+    And Json in response body matches createdUser.json
+    And Response object is properly validated as an user object of an user "<username2>"
+    And "<username2>" starts to login with credentials
+    And 200 response code is received
+    And Cookie can be obtained from response header for "<username2>"
+    And "<username>" creates a "<transaction>" transaction from user "<username>" to "<username1>" with <amount> and description "<description>"
+    And 200 response code is received
+    And "<username>" likes this transaction
+    And "<username>" creates a "<transaction>" transaction from user "<username>" to "<username1>" with <amount> and description "<description>"
+    And 200 response code is received
+    And "<username>" likes this transaction
+    And "<username>" creates a "<transaction>" transaction from user "<username>" to "<username1>" with <amount> and description "<description>"
+    And 200 response code is received
+    And "<username>" likes this transaction
+    And It is possible to send get notification request
+    And 200 response code is received
+    And 3 objects are returned after get notification request
+    And Not existing notification is choosen
+    When Notification is read
+    Then 422 response code is received
+    And It is possible to send get notification request
+    And 200 response code is received
+    And 3 objects are returned after get notification request
+    Examples:
+      | username  | username1 | username2 | transaction | amount | description | notificationNr |
+      | username  | username1 | username2 | payment     | 100    | note 1      | 1              |
+      | username1 | username  | username3 | payment     | 200    | note 1      | 2              |
+      | username1 | username  | username3 | payment     | 200    | note 1      | 0              |

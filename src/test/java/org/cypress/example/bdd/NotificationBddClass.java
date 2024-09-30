@@ -130,6 +130,19 @@ public class NotificationBddClass extends BaseTest {
                 .then();
     }
 
+    @And("Notification is read by {string}")
+    public void ThisIsPossibleToReadThisNotificationByAnUser(String username) {
+        UpdateNotification updateNotification = new UpdateNotification();
+        updateNotification.isRead = true;
+        updateNotification.id = stepsData.notificationId;
+
+        stepsData.validatableResponse = RestAssured.given(SpecBuilder.getRequestSpec(stepsData.cookiesValues.get(username)))
+                .body(updateNotification)
+                .when()
+                .patch(pathNotifications+stepsData.notificationId)
+                .then();
+    }
+
     @And("{int} objects are returned after get notification request")
     public void IntObjectsAreReturnedAfterGetNotificationRequest(int quantity) {
         JsonPath jsonPathEvaluator = stepsData.validatableResponse.extract().jsonPath();
@@ -141,6 +154,11 @@ public class NotificationBddClass extends BaseTest {
     @And("{int} is choosen")
     public void IntNotificationNrIsChoosen(int notificationNr) {
         stepsData.notificationId = stepsData.validatableResponse.extract().jsonPath().get("results["+notificationNr+"].id");
+    }
+
+    @And("Not existing notification is choosen")
+    public void NotExistingNotificationIdIsChoosen() {
+        stepsData.notificationId = "0";
     }
 
 

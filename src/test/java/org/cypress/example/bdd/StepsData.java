@@ -20,5 +20,6 @@ public class StepsData {
     public Response response;
     public String cookieValue;
     public String notificationId;
+    public HashMap<String, String> cookiesValues = new HashMap<>();
 
 }
