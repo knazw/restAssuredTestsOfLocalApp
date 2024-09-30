@@ -1,5 +1,6 @@
 package org.cypress.example.bdd;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.en.And;
@@ -10,6 +11,7 @@ import io.restassured.response.Response;
 import org.cypress.example.BaseTest;
 import org.cypress.example.model.TransactionGet;
 import org.cypress.example.model.UserGet;
+import org.cypress.example.model.UserNoUsername;
 import org.dataProviders.JsonDataReader;
 import org.junit.jupiter.api.Assertions;
 import org.slf4j.Logger;
@@ -78,6 +80,34 @@ public class RegistrationBddClass extends BaseTest{
                 .findFirst().get();
 
         Assertions.assertTrue(userGet != null);
+    }
+
+    @And("Response contains no username {string} for data from {string}")
+    public void ResponseContainsNoUsername(String username, String fileName) {
+        String jsonNoUsername = JsonDataReader.getJsonFile(fileName);
+        Response response = this.stepsData.validatableResponse.extract().response();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        UserNoUsername userFromFile = null;
+        try {
+            userFromFile = objectMapper.readValue(jsonNoUsername, UserNoUsername.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+        Assertions.assertNotNull(userFromFile);
+
+        List<UserGet> userGetList = objectMapper.convertValue(response.jsonPath().get("results"),
+                new TypeReference<List<UserGet>>(){});
+
+        UserNoUsername finalUserFromFile = userFromFile;
+        UserGet userGet = userGetList.stream()
+                .filter(item -> item.firstName.equals(finalUserFromFile.firstName) && item.lastName.equals(finalUserFromFile.lastName))
+                .findFirst().get();
+
+        Assertions.assertTrue(userGet != null);
+        Assertions.assertTrue(userGet.username == null);
     }
 
     @And("Response does not contain object for {string}")
