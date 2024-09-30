@@ -34,7 +34,19 @@ Feature: Registration of an user
       | username | file                                    | status code | username1 | schema                                                            |
       | username | RegistrationInvalid/EmptyFirstName.json | 201         | username1 | testDataResources/RegistrationInvalid/schemas/EmptyFirstName.json |
       | username | RegistrationInvalid/EmptyLastname.json  | 201         | username1 | testDataResources/RegistrationInvalid/schemas/EmptyLastName.json  |
+      | username | RegistrationInvalid/EmptyUsername.json  | 201         | username1 | testDataResources/RegistrationInvalid/schemas/EmptyUserName.json  |
 #      | username | RegistrationInvalid/EmptyUsername.json  | 201         | Bad Request | username1 | testDataResources/RegistrationInvalid/schemas/EmptyUserName.json  |
+
+  Scenario Outline: Registration of an user without username is possible (bug? of this software)
+    Given Following user "<username>"
+    When "<username>" is created with not all data provided in request based on "<file>"
+    Then <status code> response code is received
+    And Response object is validated with a file "<schema>"
+    And Get request for users list is sent
+    And Response contains no username "<username>" for data from "<file>"
+    Examples:
+      | username | file                                    | status code | username1 | schema                                                            |
+      | username | RegistrationInvalid/EmptyUsername.json  | 201         | username1 | testDataResources/RegistrationInvalid/schemas/EmptyUserName.json  |
 
   Scenario: Registration of an user without password is not possible
     Given Following user "username"
