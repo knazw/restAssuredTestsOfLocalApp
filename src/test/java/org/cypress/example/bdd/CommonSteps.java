@@ -34,6 +34,20 @@ public class CommonSteps {
         stepsData.cookieValue = cookieValue;
     }
 
+    @And("Cookie can be obtained from response header for {string}")
+    public void CookieCanBeObtainedFromResponseHeaderForAnUser(String username) {
+        Response response = stepsData.validatableResponse
+                .extract()
+                .response();
+
+        String cookieValue = response.header("Set-Cookie");
+
+        String[] cookieHeaderArray = cookieValue.split(";");
+        cookieValue = cookieHeaderArray[0];
+
+        stepsData.cookiesValues.put(username, cookieValue);
+    }
+
     @Then("{int} response code is received")
     public void ResponseCodeIsReceived(int statusCode) {
         stepsData.validatableResponse.statusCode(statusCode);
@@ -47,6 +61,11 @@ public class CommonSteps {
     @And("Response message contains OK")
     public void ResponseMessageContainsOK() {
         stepsData.validatableResponse.body(containsString("OK"));
+    }
+
+    @And("Response message contains {string}")
+    public void ResponseMessageContainsMessage(String message) {
+        stepsData.validatableResponse.body(containsString(message));
     }
 
     @And("Response message contains Unathorized")

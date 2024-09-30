@@ -69,6 +69,22 @@ public class NotificationBddClass extends BaseTest {
 
     }
 
+    @When("{string} likes this not existing transaction")
+    public void UserLikesThisNotExistingTransaction(String username) {
+        String postTransactionId = "0";
+
+        LikeTransaction likeTransaction = new LikeTransaction();
+        likeTransaction.transactionId = postTransactionId;
+
+        stepsData.likeTransaction = likeTransaction;
+
+        stepsData.validatableResponse = RestAssured.given(SpecBuilder.getRequestSpec(stepsData.cookieValue))
+                .body(likeTransaction)
+                .when()
+                .post(pathLikesTransaction+postTransactionId)
+                .then();
+    }
+
     @And("It is possible to obtain this like by get transaction request")
     public void ItIspossibleToObtainThisLikeByGetRequest() {
         stepsData.validatableResponse = RestAssured.given(SpecBuilder.getRequestSpec(stepsData.cookieValue))
@@ -89,6 +105,18 @@ public class NotificationBddClass extends BaseTest {
         String likeUserId = transactionGet.likes.get(0).userId;
 
         Assertions.assertEquals(stepsData.UsersIdMap.get(username).id, likeUserId);
+    }
+
+    @And("It is not possible to find this like")
+    public void ItIsNotPossibleToFindThisLike() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<TransactionGet> transactionGetList = objectMapper.convertValue(stepsData.validatableResponse.extract().
+                response().jsonPath().get("results"),  new TypeReference<List<TransactionGet>>(){});
+        TransactionGet transactionGet = transactionGetList.stream()
+                .filter(transactionGetItem -> transactionGetItem.id.equals(this.stepsData.transactionCreated.id))
+                .findFirst().orElse(null);
+
+        Assertions.assertNull(transactionGet);
     }
 
     @And("This like response contains correct transactionId")
@@ -117,6 +145,13 @@ public class NotificationBddClass extends BaseTest {
         Assertions.assertTrue(stepsData.notificationId != null);
     }
 
+    @And("It is not possible to obtain notificationId from get notification response")
+    public void ThisIsNotPossibleToObtainNotificationIdFromGetNotificationResponse() {
+        Response response = stepsData.validatableResponse.extract().response();
+        stepsData.notificationId = response.jsonPath().get("results[0].id");
+        Assertions.assertNull(stepsData.notificationId);
+    }
+
     @And("Notification is read")
     public void ThisIsPossibleToReadThisNotification() {
         UpdateNotification updateNotification = new UpdateNotification();
@@ -127,6 +162,19 @@ public class NotificationBddClass extends BaseTest {
                     .body(updateNotification)
                 .when()
                     .patch(pathNotifications+stepsData.notificationId)
+                .then();
+    }
+
+    @And("Notification is read by {string}")
+    public void ThisIsPossibleToReadThisNotificationByAnUser(String username) {
+        UpdateNotification updateNotification = new UpdateNotification();
+        updateNotification.isRead = true;
+        updateNotification.id = stepsData.notificationId;
+
+        stepsData.validatableResponse = RestAssured.given(SpecBuilder.getRequestSpec(stepsData.cookiesValues.get(username)))
+                .body(updateNotification)
+                .when()
+                .patch(pathNotifications+stepsData.notificationId)
                 .then();
     }
 
@@ -141,6 +189,11 @@ public class NotificationBddClass extends BaseTest {
     @And("{int} is choosen")
     public void IntNotificationNrIsChoosen(int notificationNr) {
         stepsData.notificationId = stepsData.validatableResponse.extract().jsonPath().get("results["+notificationNr+"].id");
+    }
+
+    @And("Not existing notification is choosen")
+    public void NotExistingNotificationIdIsChoosen() {
+        stepsData.notificationId = "0";
     }
 
 

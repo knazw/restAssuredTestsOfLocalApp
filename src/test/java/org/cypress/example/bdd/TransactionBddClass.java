@@ -34,6 +34,11 @@ public class TransactionBddClass extends BaseTest {
         this.stepsData.transactionCreated = objectMapper.convertValue(response.jsonPath().get("transaction"), TransactionCreated.class);
     }
 
+    @And("Not existing transaction object is stored")
+    public void NotExistingTransactionObjectIsStored() {
+        this.stepsData.transactionCreated = new TransactionCreated(null, null, 0, null, null, null, null, null,null);
+    }
+
     @And("Correct transaction data are present in this object: {string}, {string}, {string}, {int} and {string}")
     public void CorrectTransactionDataArePresentInThisObject(String username,String username1,String transaction,int amount,String description) {
         String userId = this.stepsData.UsersIdMap.get(username).id;
