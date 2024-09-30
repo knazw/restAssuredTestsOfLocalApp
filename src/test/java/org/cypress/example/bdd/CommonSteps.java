@@ -63,6 +63,11 @@ public class CommonSteps {
         stepsData.validatableResponse.body(containsString("OK"));
     }
 
+    @And("Response message contains {string}")
+    public void ResponseMessageContainsMessage(String message) {
+        stepsData.validatableResponse.body(containsString(message));
+    }
+
     @And("Response message contains Unathorized")
     public void ResponseMessageContainsUnathorized() {
         //And Response message contains OK
