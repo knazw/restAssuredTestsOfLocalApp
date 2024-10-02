@@ -14,13 +14,14 @@ public class TransactionGet {
     public String receiverId;
     public String senderId;
     public String status;
+    public String requestStatus;
     public String createdAt;
     public String modifiedAt;
 
     public TransactionGet() {
 
     }
-    public TransactionGet(String receiverName, String senderName, List<Like> likes, List<String> comments, String id, String uuid, int amount, String description, String receiverId, String senderId, String status, String createdAt, String modifiedAt) {
+    public TransactionGet(String receiverName, String senderName, List<Like> likes, List<String> comments, String id, String uuid, int amount, String description, String receiverId, String senderId, String status, String requestStatus,String createdAt, String modifiedAt) {
         this.receiverName = receiverName;
         this.senderName = senderName;
         this.likes = likes;
@@ -32,6 +33,7 @@ public class TransactionGet {
         this.receiverId = receiverId;
         this.senderId = senderId;
         this.status = status;
+        this.requestStatus = requestStatus;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
     }
@@ -122,6 +124,14 @@ public class TransactionGet {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getRequestStatus() {
+        return requestStatus;
+    }
+
+    public void setRequestStatus(String requestStatus) {
+        this.requestStatus = requestStatus;
     }
 
     public String getCreatedAt() {

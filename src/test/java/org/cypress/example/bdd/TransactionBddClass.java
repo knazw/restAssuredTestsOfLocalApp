@@ -36,16 +36,22 @@ public class TransactionBddClass extends BaseTest {
 
     @And("Not existing transaction object is stored")
     public void NotExistingTransactionObjectIsStored() {
-        this.stepsData.transactionCreated = new TransactionCreated(null, null, 0, null, null, null, null, null,null);
+        this.stepsData.transactionCreated = new TransactionCreated(null, null, 0, null, null, null, null, null, null,null);
     }
 
-    @And("Correct transaction data are present in this object: {string}, {string}, {string}, {int} and {string}")
-    public void CorrectTransactionDataArePresentInThisObject(String username,String username1,String transaction,int amount,String description) {
+    @And("Correct transaction data are present in this object: {string}, {string}, {string}, {int}, {string}, {string} and {string}")
+    public void CorrectTransactionDataArePresentInThisObject(String username,String username1,String transaction,int amount,String description, String status, String requestStatus) {
         String userId = this.stepsData.UsersIdMap.get(username).id;
         String userId1 = this.stepsData.UsersIdMap.get(username1).id;
         Assertions.assertEquals(userId, this.stepsData.transactionCreated.senderId);
         Assertions.assertEquals(userId1, this.stepsData.transactionCreated.receiverId);
-        Assertions.assertEquals("complete", this.stepsData.transactionCreated.status);
+        Assertions.assertEquals(status, this.stepsData.transactionCreated.status);  // complete
+        if(requestStatus.isEmpty()) {
+            Assertions.assertEquals(null, this.stepsData.transactionCreated.requestStatus);  // complete
+        }
+        else {
+            Assertions.assertEquals(requestStatus, this.stepsData.transactionCreated.requestStatus);  // complete
+        }
         Assertions.assertEquals(amount * 100, this.stepsData.transactionCreated.amount);
         Assertions.assertEquals(description, this.stepsData.transactionCreated.description);
         Assertions.assertTrue(!this.stepsData.transactionCreated.createdAt.isEmpty());
@@ -79,8 +85,8 @@ public class TransactionBddClass extends BaseTest {
                 .findFirst().get();
     }
 
-    @And("It is possobie to compare obtained transaction with data: {string}, {string}, {string}, {int} and {string}")
-    public void ItIsPossobieToCompareOtainedTransactionWithData(String username,String username1,String transaction,int amount,String description){
+    @And("It is possible to compare obtained transaction with data: {string}, {string}, {string}, {int}, {string}, {string} and {string}")
+    public void ItIsPossibleToCompareOtainedTransactionWithData(String username,String username1,String transaction,int amount,String description, String status, String requestStatus){
         String userId = this.stepsData.UsersIdMap.get(username).id;
         String userId1 = this.stepsData.UsersIdMap.get(username1).id;
 
@@ -94,6 +100,13 @@ public class TransactionBddClass extends BaseTest {
 
         Assertions.assertEquals(user, this.stepsData.transactionGet.senderName);
         Assertions.assertEquals(user1, this.stepsData.transactionGet.receiverName);
+        Assertions.assertEquals(status, this.stepsData.transactionGet.status);
+        if(requestStatus.isEmpty()) {
+            Assertions.assertEquals(null, this.stepsData.transactionGet.requestStatus);
+        }
+        else {
+            Assertions.assertEquals(requestStatus, this.stepsData.transactionGet.requestStatus);
+        }
     }
 
 

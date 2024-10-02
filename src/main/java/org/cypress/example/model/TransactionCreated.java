@@ -8,13 +8,15 @@ public class TransactionCreated {
     public String receiverId;
     public String senderId;
     public String status;
+    public String requestStatus;
     public String createdAt;
     public String modifiedAt;
 
     public TransactionCreated() {
 
     }
-    public TransactionCreated(String id, String uuid, int amount, String description, String receiverId, String senderId, String status, String createdAt, String modifiedAt) {
+
+    public TransactionCreated(String id, String uuid, int amount, String description, String receiverId, String senderId, String status, String requestStatus, String createdAt, String modifiedAt) {
         this.id = id;
         this.uuid = uuid;
         this.amount = amount;
@@ -22,6 +24,7 @@ public class TransactionCreated {
         this.receiverId = receiverId;
         this.senderId = senderId;
         this.status = status;
+        this.requestStatus = requestStatus;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
     }
@@ -80,6 +83,14 @@ public class TransactionCreated {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getRequestStatus() {
+        return requestStatus;
+    }
+
+    public void setRequestStatus(String requestStatus) {
+        this.requestStatus = requestStatus;
     }
 
     public String getCreatedAt() {
