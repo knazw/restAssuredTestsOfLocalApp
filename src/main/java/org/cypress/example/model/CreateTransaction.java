@@ -4,7 +4,7 @@ public class CreateTransaction {
 
     public String transactionType;
 
-    public String amount;
+    public int amount;
 
     public String description;
 
@@ -20,11 +20,11 @@ public class CreateTransaction {
         this.transactionType = transactionType;
     }
 
-    public String getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 
