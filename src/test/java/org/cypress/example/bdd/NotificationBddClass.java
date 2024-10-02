@@ -38,7 +38,25 @@ public class NotificationBddClass extends BaseTest {
         CreateTransaction createTransaction = new CreateTransaction();
         createTransaction.senderId = stepsData.UsersIdMap.get(username).id;
         createTransaction.receiverId = stepsData.UsersIdMap.get(username1).id;
-        createTransaction.amount = amount + "";
+        createTransaction.amount = amount;
+        createTransaction.description = description;
+        createTransaction.transactionType = transactionType;
+
+        stepsData.validatableResponse = RestAssured.given(SpecBuilder.getRequestSpec(stepsData.cookieValue))
+                    .body(createTransaction)
+                .when()
+                    .post(pathTransactions)
+                .then();
+    }
+
+    @When("{string} creates a {string} transaction from user {string} to userId {string} with {int} and description {string}")
+    public void UserCreatesTransactionWithAmountAndDescriptionToSpecificUserId(String usernameArg, String transactionType, String username, String userId, int amount, String description) {
+        JsonDataReader jsonDataReader = new JsonDataReader();
+
+        CreateTransaction createTransaction = new CreateTransaction();
+        createTransaction.senderId = stepsData.UsersIdMap.get(username).id;
+        createTransaction.receiverId = userId;
+        createTransaction.amount = amount;
         createTransaction.description = description;
         createTransaction.transactionType = transactionType;
 
