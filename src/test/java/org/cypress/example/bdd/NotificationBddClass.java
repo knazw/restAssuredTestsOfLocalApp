@@ -214,5 +214,11 @@ public class NotificationBddClass extends BaseTest {
         stepsData.notificationId = "0";
     }
 
+    @And("Error contains {string}")
+    public void ErrorContains(String msg) {
+        String body = stepsData.validatableResponse.extract().body().asPrettyString();
+
+        Assertions.assertTrue(body.contains(msg));
+    }
 
 }
