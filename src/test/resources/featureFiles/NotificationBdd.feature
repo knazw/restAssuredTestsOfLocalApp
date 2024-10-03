@@ -1,6 +1,6 @@
 Feature: Notification scenarios
 
-  Scenario Outline: User with account is able to like a transaction
+  Scenario Outline: User with account is able to like a "<transaction>" transaction
     Given Following user "<username>"
     And "<username>" is created
     And 201 response code is received
@@ -36,7 +36,9 @@ Feature: Notification scenarios
     Examples:
       | username  | username1 | transaction | amount | description |
       | username  | username1 | payment     | 100    | note 1      |
-      | username1 | username  | payment     | 200    | note 1      |
+      | username1 | username  | payment     | 200    | note 2      |
+      | username  | username1 | request     | 300    | note 3      |
+      | username1 | username  | request     | 400    | note 4      |
 
   Scenario Outline: User with account is not able to like a not existing transaction
     Given Following user "<username>"
@@ -75,6 +77,8 @@ Feature: Notification scenarios
       | username  | username1 | transaction | amount | description |
       | username  | username1 | payment     | 100    | note 1      |
       | username1 | username  | payment     | 200    | note 1      |
+      | username  | username1 | request     | 100    | note 1      |
+      | username1 | username  | request     | 200    | note 1      |
 
 
   Scenario Outline: Only one notification is read from a group of 3 notifications
@@ -113,6 +117,8 @@ Feature: Notification scenarios
       | username  | username1 | transaction | amount | description | notificationNr |
       | username  | username1 | payment     | 100    | note 1      | 1              |
       | username1 | username  | payment     | 200    | note 1      | 2              |
+      | username  | username1 | request     | 100    | note 1      | 1              |
+      | username1 | username  | request     | 200    | note 1      | 2              |
 
 
   Scenario Outline: It is possible to read not mine notification
@@ -162,6 +168,9 @@ Feature: Notification scenarios
       | username  | username1 | username2 | payment     | 100    | note 1      | 1              |
       | username1 | username  | username3 | payment     | 200    | note 1      | 2              |
       | username1 | username  | username3 | payment     | 200    | note 1      | 0              |
+      | username  | username1 | username2 | request     | 100    | note 1      | 1              |
+      | username1 | username  | username3 | request     | 200    | note 1      | 2              |
+      | username1 | username  | username3 | request     | 200    | note 1      | 0              |
 
 
   Scenario Outline: It is not possible to read not existing notification
@@ -209,8 +218,11 @@ Feature: Notification scenarios
       | username  | username1 | username2 | payment     | 100    | note 1      | 1              |
       | username1 | username  | username3 | payment     | 200    | note 1      | 2              |
       | username1 | username  | username3 | payment     | 200    | note 1      | 0              |
+      | username  | username1 | username2 | request     | 100    | note 1      | 1              |
+      | username1 | username  | username3 | request     | 200    | note 1      | 2              |
+      | username1 | username  | username3 | request     | 200    | note 1      | 0              |
 
-  Scenario Outline: User with account is not able to create a transaction to not existing user
+  Scenario Outline: User with account is not able to create a "<transaction>" transaction to not existing user
     Given Following user "<username>"
     And "<username>" is created
     And 201 response code is received
@@ -226,11 +238,45 @@ Feature: Notification scenarios
     And Response object is properly validated as an user object of an user "<username1>"
     When "<username>" creates a "<transaction>" transaction from user "<username>" to userId "<userId>" with <amount> and description "<description>"
     Then 500 response code is received
+    And It is possible to obtain transactions list by get transaction request
+    And 500 response code is received
+    And Error contains "TypeError: Cannot read properties of undefined"
     And It is possible to send get notification request
     And 200 response code is received
     And 0 objects are returned after get notification request
 
     Examples:
-      | username  | username1 | transaction | amount | description | userId |
-      | username  | username1 | payment     | 100    | note 1      | 0a     |
-      | username1 | username  | payment     | 200    | note 1      | 1a     |
+      | username  | username1 | transaction | amount | description | userId | status   | requestStatus |
+      | username  | username1 | payment     | 100    | note 1      | 0a     | complete |               |
+      | username1 | username  | payment     | 200    | note 1      | 1a     | complete |               |
+
+
+  Scenario Outline: User with account is partialy able to create a "<transaction>" transaction to not existing user (bug?)
+    Given Following user "<username>"
+    And "<username>" is created
+    And 201 response code is received
+    And Json in response body matches createdUser.json
+    And Response object is properly validated as an user object of an user "<username>"
+    And "<username>" starts to login with credentials
+    And 200 response code is received
+    And Cookie can be obtained from response header
+    And Following user "<username1>"
+    And "<username1>" is created
+    And 201 response code is received
+    And Json in response body matches createdUser.json
+    And Response object is properly validated as an user object of an user "<username1>"
+    When "<username>" creates a "<transaction>" transaction from user "<username>" to userId "<userId>" with <amount> and description "<description>"
+    Then 200 response code is received
+    And Transaction object is obtained from response
+    And Correct transaction data are present in this object: "<username>", "<username1>", "<transaction>", <amount>, "<description>", "<status>" and "<requestStatus>"
+    And It is possible to obtain transactions list by get transaction request
+    And 500 response code is received
+    And Error contains "TypeError: Cannot read properties of undefined"
+    And It is possible to send get notification request
+    And 200 response code is received
+    And 0 objects are returned after get notification request
+
+    Examples:
+      | username  | username1 | transaction | amount | description | userId | status | requestStatus |
+      | username  | username1 | request     | 100    | note 1      | 0a     | pending | pending      |
+      | username1 | username  | request     | 200    | note 1      | 1a     | pending | pending      |

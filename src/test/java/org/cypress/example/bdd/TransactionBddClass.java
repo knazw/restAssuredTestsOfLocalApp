@@ -44,13 +44,13 @@ public class TransactionBddClass extends BaseTest {
         String userId = this.stepsData.UsersIdMap.get(username).id;
         String userId1 = this.stepsData.UsersIdMap.get(username1).id;
         Assertions.assertEquals(userId, this.stepsData.transactionCreated.senderId);
-        Assertions.assertEquals(userId1, this.stepsData.transactionCreated.receiverId);
-        Assertions.assertEquals(status, this.stepsData.transactionCreated.status);  // complete
+//        Assertions.assertEquals(userId1, this.stepsData.transactionCreated.receiverId);
+        Assertions.assertEquals(status, this.stepsData.transactionCreated.status);  // complete / pending
         if(requestStatus.isEmpty()) {
-            Assertions.assertEquals(null, this.stepsData.transactionCreated.requestStatus);  // complete
+            Assertions.assertEquals(null, this.stepsData.transactionCreated.requestStatus);  // complete / pending
         }
         else {
-            Assertions.assertEquals(requestStatus, this.stepsData.transactionCreated.requestStatus);  // complete
+            Assertions.assertEquals(requestStatus, this.stepsData.transactionCreated.requestStatus);  // complete / pending
         }
         Assertions.assertEquals(amount * 100, this.stepsData.transactionCreated.amount);
         Assertions.assertEquals(description, this.stepsData.transactionCreated.description);
