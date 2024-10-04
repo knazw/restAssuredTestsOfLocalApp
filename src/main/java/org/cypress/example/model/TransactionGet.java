@@ -1,8 +1,9 @@
 package org.cypress.example.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class TransactionGet {
+public class TransactionGet implements Serializable {
     public String receiverName;
     public String senderName;
     public List<Like> likes;

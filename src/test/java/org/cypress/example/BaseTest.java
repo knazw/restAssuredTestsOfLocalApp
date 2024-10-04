@@ -21,7 +21,7 @@ public class BaseTest {
     static final Logger log = getLogger(lookup().lookupClass());
     public static String baseUri = "http://localhost:3001";
     protected static String pathDataSeed = "/testData/seed";
-    protected static String pathTransactions = "/transactions";
+    protected static String pathTransactions = "/transactions/";
     protected static String pathLikesTransaction = "/likes/";
     protected static String pathNotifications = "/notifications/";
     protected static String pathComments = "/comments/";
