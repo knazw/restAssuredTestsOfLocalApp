@@ -5,11 +5,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import org.apache.commons.lang3.SerializationUtils;
 import org.cypress.example.BaseTest;
+import org.cypress.example.model.CreateTransaction;
 import org.cypress.example.model.TransactionCreated;
 import org.cypress.example.model.TransactionGet;
+import org.dataProviders.JsonDataReader;
 import org.junit.jupiter.api.Assertions;
 import org.slf4j.Logger;
 
@@ -107,6 +111,22 @@ public class TransactionBddClass extends BaseTest {
         else {
             Assertions.assertEquals(requestStatus, this.stepsData.transactionGet.requestStatus);
         }
+    }
+
+    @When("User {string} accepts transaction")
+    public void UserAcceptsRequestTransaction(String username) {
+        TransactionGet transactionPatch = (TransactionGet) SerializationUtils.clone(this.stepsData.transactionGet);
+
+        JsonDataReader jsonDataReader = new JsonDataReader();
+
+        transactionPatch.status = "complete";
+        transactionPatch.requestStatus = "accepted";
+
+        stepsData.validatableResponse = RestAssured.given(SpecBuilder.getRequestSpec(stepsData.cookieValue))
+                    .body(transactionPatch)
+                .when()
+                    .patch(pathTransactions + transactionPatch.id)
+                .then();
     }
 
 
