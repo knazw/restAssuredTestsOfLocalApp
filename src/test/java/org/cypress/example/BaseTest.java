@@ -60,4 +60,19 @@ public class BaseTest {
                     .setContentType(ContentType.JSON).log(LogDetail.ALL).build();
         }
     }
+
+    protected void clearDataAsync(int id) {
+        new Thread(() -> {
+            log.debug("clear data start id="+id);
+            RestAssured.given(BaseTest.SpecBuilder.getRequestSpec())
+                        .baseUri(baseUri)
+                        .contentType(ContentType.JSON)
+                    .when()
+                        .post(pathDataSeed)
+                    .then()
+                        .statusCode(200)
+                        .body(containsString("OK"));
+            log.debug("clear data end id="+id);
+        }).start();
+    }
 }

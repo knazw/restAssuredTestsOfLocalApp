@@ -3,15 +3,20 @@ package org.cypress.example.bdd;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.restassured.response.Response;
+import org.cypress.example.utils.AllureLoggerUtils;
 import org.slf4j.Logger;
 
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.hamcrest.Matchers.containsString;
 import static org.slf4j.LoggerFactory.getLogger;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class CommonSteps {
 
     static final Logger log = getLogger(lookup().lookupClass());
+    private static final DateTimeFormatter TIMESTAMP_FORMAT =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 
     private StepsData stepsData;
 
@@ -50,12 +55,19 @@ public class CommonSteps {
 
     @Then("{int} response code is received")
     public void ResponseCodeIsReceived(int statusCode) {
+        AllureLoggerUtils.logStepWithTimestamp(statusCode +" response code is received");
         stepsData.validatableResponse.statusCode(statusCode);
     }
 
     @And("Response message {string}")
     public void ResponseMessage(String string) {
         stepsData.validatableResponse.body(containsString(string));
+
+        // Używanie timestamped step z attachmentem
+        AllureLoggerUtils.createTimestampedStep(
+                "Obtaining data from response",
+                String.format("Response message: %s ", string)
+        );
     }
 
     @And("Response message contains OK")

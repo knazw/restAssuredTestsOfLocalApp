@@ -4,10 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.BeforeAll;
+import io.cucumber.java.Scenario;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.qameta.allure.Allure;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.ErrorLoggingFilter;
@@ -18,6 +20,7 @@ import io.restassured.response.Response;
 import org.cypress.example.BaseTest;
 import org.cypress.example.model.User;
 import org.cypress.example.model.UserCreated;
+import org.cypress.example.utils.AllureLoggerUtils;
 import org.dataProviders.JsonDataReader;
 import org.dataProviders.PropertiesStorage;
 import org.junit.jupiter.api.Assertions;
@@ -33,10 +36,14 @@ import static java.lang.invoke.MethodHandles.lookup;
 import static org.hamcrest.Matchers.containsString;
 import static org.slf4j.LoggerFactory.getLogger;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class LoginBDDClass extends BaseTest{
 
     private static String configPath = "configs//application.properties";
     static final Logger log = getLogger(lookup().lookupClass());
+    private LocalDateTime scenarioStartTime;
 
     private StepsData stepsData;
 
@@ -45,14 +52,51 @@ public class LoginBDDClass extends BaseTest{
     }
 
     @After
-    public void afterEach() {
+    public void afterEach(Scenario scenario) {
         log.debug("\n\n\n============after each============\n\n\n");
-        clearData();
+//        clearData();
+        clearDataAsync(0);
+        clearDataAsync(1);
+        clearDataAsync(2);
+
+        LocalDateTime endTime = LocalDateTime.now();
+        String endTimestamp = endTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
+
+        long durationMs = java.time.Duration.between(scenarioStartTime, endTime).toMillis();
+        log.info("[{}] Finished scenario: {} (Status: {}, Duration: {} ms)",
+                endTimestamp, scenario.getName(), scenario.getStatus(), durationMs);
+
+        String summary = String.format(
+                "Scenario: %s%nEnd Time: %s%nStatus: %s%nDuration: %d ms%nStart Time: %s",
+                scenario.getName(),
+                endTimestamp,
+                scenario.getStatus(),
+                durationMs,
+                scenarioStartTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"))
+        );
+        Allure.addAttachment("Scenario Summary", "text/plain", summary);
+
+        if (scenario.isFailed()) {
+            AllureLoggerUtils.addTimestampedLog("Scenario failed - capturing failure details");
+        }
     }
 
     @Before
-    public void beforeEach() {
+    public void beforeEach(Scenario scenario ) {
         log.debug("\n\n\n============before each============\n\n\n");
+        scenarioStartTime = LocalDateTime.now();
+        String startTimestamp = scenarioStartTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
+
+        log.info("[{}] Starting scenario: {}", startTimestamp, scenario.getName());
+
+        String scenarioInfo = String.format(
+                "Scenario: %s%nStart Time: %s%nTags: %s",
+                scenario.getName(),
+                startTimestamp,
+                scenario.getSourceTagNames()
+        );
+        Allure.addAttachment("Scenario Start Info", "text/plain", scenarioInfo);
+        AllureLoggerUtils.addTimestampedLog("Scenario execution started: " + scenario.getName());
         clearData();
     }
 
@@ -83,6 +127,10 @@ public class LoginBDDClass extends BaseTest{
 
     @Given("Following user {string}")
     public void FollowingUser(String username) {
+//        System.setProperty("http.proxyHost", "127.0.0.1");
+//        System.setProperty("https.proxyHost", "127.0.0.1");
+//        System.setProperty("http.proxyPort", "8888");
+//        System.setProperty("https.proxyPort", "8888");
         JsonDataReader jsonDataReader = new JsonDataReader();
         stepsData.user = jsonDataReader.getUserByUsername(username);
     }
