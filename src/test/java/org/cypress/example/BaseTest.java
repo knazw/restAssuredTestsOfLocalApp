@@ -11,6 +11,7 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.cypress.example.model.User;
 import org.slf4j.Logger;
+//import org.typescript.example.bdd.ApiConfig;
 
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.hamcrest.Matchers.containsString;
@@ -20,6 +21,8 @@ public class BaseTest {
 
     static final Logger log = getLogger(lookup().lookupClass());
     public static String baseUri = "http://localhost:3001";
+    public static String baseUriTypescript = "http://localhost:3010";
+    //public static String baseUriTypescript = ApiConfig.BASE_URI + ":"+ ApiConfig.PORT;
     protected static String pathDataSeed = "/testData/seed";
     protected static String pathTransactions = "/transactions/";
     protected static String pathLikesTransaction = "/likes/";
@@ -30,6 +33,10 @@ public class BaseTest {
     public static String cookieValue = "";
     protected static String userId0;
     protected static String userId1;
+
+    // typescript tests
+    protected static String setValuePath = "/set-value?key=b47n5ib5578juto97b573vy35y352n73m";
+    protected static String computeOperationPath = "/compute?key=b47n5ib5578juto97b573vy35y352n73m";
 
 
 
