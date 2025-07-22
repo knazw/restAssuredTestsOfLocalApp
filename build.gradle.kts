@@ -12,6 +12,14 @@ repositories {
 val allureVersion = "2.29.0"
 val aspectJVersion = "1.9.24"
 val wireMockVersion = "3.13.1"
+val restAssuredVersion = "5.5.5"
+val junitBomVersion = "5.11.3"
+val kotlinVersion = "2.1.0"
+val logbackVersion = "1.5.3"
+val slf4jVersion = "2.0.17"
+val jacksonDatabindVersion = "2.19.2"
+val cucumberVersion = "7.26.0"
+val jacksonDatatypeJSR310Version = "2.19.2"
 
 val agent: Configuration by configurations.creating {
     isCanBeConsumed = true
@@ -21,38 +29,59 @@ val agent: Configuration by configurations.creating {
 
 dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
+    implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonDatabindVersion")
 
-
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("io.rest-assured:rest-assured:5.4.0")
-    testImplementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
-    testImplementation("io.rest-assured:json-schema-validator:5.4.0")
-    testImplementation("org.json:json:20240205")
-
-    testImplementation(platform("io.qameta.allure:allure-bom:$allureVersion"))
-    testImplementation("io.qameta.allure:allure-rest-assured:$allureVersion")
-    testImplementation("io.qameta.allure:allure-junit5:$allureVersion")
-
+    // AspectJ weaver
     agent("org.aspectj:aspectjweaver:${aspectJVersion}")
 
-    testImplementation("io.cucumber:cucumber-bom:7.16.1")
-    testImplementation("io.cucumber:cucumber-junit-platform-engine:7.16.1")
-    testImplementation("io.cucumber:cucumber-java:7.16.1")
+
+    // Cucumber BOM i dependencies
+    testImplementation(platform("io.cucumber:cucumber-bom:$cucumberVersion"))
+    testImplementation("io.cucumber:cucumber-junit-platform-engine")
+    testImplementation("io.cucumber:cucumber-java")
+    testImplementation("io.cucumber:cucumber-picocontainer")
+
     testImplementation("io.qameta.allure:allure-cucumber7-jvm")
     testImplementation("org.junit.platform:junit-platform-suite:1.10.2")
     testImplementation("org.apache.commons:commons-collections4:4.4")
 
-    testImplementation("io.cucumber:cucumber-picocontainer:7.26.0")
+    // Allure BOM i dependencies
+    testImplementation(platform("io.qameta.allure:allure-bom:$allureVersion"))
+    testImplementation("io.qameta.allure:allure-rest-assured:$allureVersion")
+    testImplementation("io.qameta.allure:allure-junit5:$allureVersion")
 
+    //testImplementation(platform("org.junit:junit-bom:5.9.1"))
+    //testImplementation("org.junit.jupiter:junit-jupiter")
 
-    testImplementation("org.slf4j:slf4j-api:2.0.17")
-    testImplementation("ch.qos.logback:logback-classic:1.5.3")
+    // JUnit Platform
+    testImplementation(platform("org.junit:junit-bom:$junitBomVersion"))
+    testImplementation("org.junit.platform:junit-platform-suite")
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+
+    // Kotlin support
+    testImplementation(platform("org.jetbrains.kotlin:kotlin-bom:$kotlinVersion"))
+    testImplementation("org.jetbrains.kotlin:kotlin-stdlib")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+
+    // Rest-Assured dependencies
+    testImplementation("io.rest-assured:rest-assured:${restAssuredVersion}")
+    testImplementation("io.rest-assured:kotlin-extensions:${restAssuredVersion}")
+    testImplementation("io.rest-assured:json-path:${restAssuredVersion}")
+    testImplementation("io.rest-assured:xml-path:${restAssuredVersion}")
+
+    testImplementation("com.fasterxml.jackson.core:jackson-databind:${jacksonDatabindVersion}")
+    testImplementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonDatatypeJSR310Version}")
+    testImplementation("io.rest-assured:json-schema-validator:${restAssuredVersion}")
+    testImplementation("org.json:json:20240205")
 
     // WireMock dependencies
     testImplementation("org.wiremock:wiremock:${wireMockVersion}")
     testImplementation("org.wiremock:wiremock-standalone:${wireMockVersion}")
+
+    // Logowanie
+    testImplementation("ch.qos.logback:logback-classic:${logbackVersion}")
+    testImplementation("org.slf4j:slf4j-api:${slf4jVersion}")
 
 }
 
@@ -72,6 +101,21 @@ tasks {
             // OPTIONAL: Include only specified tags using JUnit5 tag expressions
             if (project.hasProperty("includeTags")) includeTags(project.property("includeTags") as String?)
         }
+/*
+        // Forward system properties from command line to test JVM
+        // Safe casting with type filtering
+        systemProperties = System.getProperties()
+            .filterKeys { it is String }
+            .mapKeys { it.key as String }
+            .mapValues { it.value ?: "" }
+       // systemProperties = System.getProperties().toMap() as Map<String, Any>
+
+        // Or specify individual properties
+        systemProperty("api.mock", System.getProperty("api.mock", "false"))
+        systemProperty("api.baseUri", System.getProperty("api.baseUri", "http://localhost"))
+        systemProperty("api.port", System.getProperty("api.port", "8080"))
+*/
+
         // OPTIONAL: Ignore test failures so that build pipelines won't get blocked by failing examples/scenarios
         ignoreFailures = true
         // OPTIONAL: Copy all system properties from the command line (-D...) to the test environment
