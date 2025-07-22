@@ -1,7 +1,6 @@
 package org.cypress.example.bdd;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.tomakehurst.wiremock.WireMockServer;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.BeforeAll;
@@ -26,7 +25,6 @@ import org.dataProviders.JsonDataReader;
 import org.dataProviders.PropertiesStorage;
 import org.junit.jupiter.api.Assertions;
 import org.slf4j.Logger;
-import org.typescript.example.bdd.ApiConfig;
 
 import java.io.*;
 import java.util.List;
@@ -46,7 +44,6 @@ public class LoginBDDClass extends BaseTest{
     private static String configPath = "configs//application.properties";
     static final Logger log = getLogger(lookup().lookupClass());
     private LocalDateTime scenarioStartTime;
-    private static WireMockServer wireMockServer;
 
     private StepsData stepsData;
 
@@ -106,12 +103,6 @@ public class LoginBDDClass extends BaseTest{
 
     @BeforeAll
     public static void setupAll() {
-        boolean useMock = Boolean.parseBoolean(System.getProperty("api.mock", "true"));
-        if (useMock) {
-            wireMockServer = new WireMockServer(ApiConfig.PORT);
-            wireMockServer.start();
-            // register stubs...
-        }
 
         if(RestAssured.filters().size() == 0) {
             RestAssured.filters(new AllureRestAssured());

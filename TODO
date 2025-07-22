@@ -1,5 +1,0 @@
-- there is a problem with concurency in junit -> old tests are not working because tests share common data
-    which can be removed by one test, tests from one file should not be runned concurently
-- there is a problem with running tests concurently in bdd syntax
-- change json to POJOs
-- add optional in properties
